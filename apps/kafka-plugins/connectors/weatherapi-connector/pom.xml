@@ -6,7 +6,7 @@
 
     <groupId>com.custom.kafka.connect</groupId>
     <artifactId>weatherapi-connector</artifactId>
-    <version>1.12-SNAPSHOT</version>
+    <version>1.12</version>
 
     <dependencies>
         <dependency>
@@ -21,6 +21,13 @@
             <version>3.13.8</version>
         </dependency>
     </dependencies>
+
+    <scm>
+        <connection>scm:svn:http://127.0.0.1/dummy</connection>
+        <developerConnection>scm:svn:https://127.0.0.1/dummy</developerConnection>
+        <tag>HEAD</tag>
+        <url>http://127.0.0.1/dummy</url>
+    </scm>
 
     <build>
         <plugins>
@@ -41,7 +48,6 @@
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
                 </configuration>
-
                 <executions>
                     <execution>
                         <id>make-assembly</id>
@@ -52,6 +58,31 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <id>buildnumber</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <format>{0,number}</format>
+                    <items>
+                        <item>buildNumber</item>
+                    </items>
+                    <doCheck>false</doCheck>
+                    <doUpdate>false</doUpdate>
+                    <revisionOnScmFailure>unknownbuild</revisionOnScmFailure>
+                </configuration>
+            </plugin>
         </plugins>
+        <finalName>${project.artifactId}-${project.version}.${buildNumber}</finalName>
     </build>
 </project>
