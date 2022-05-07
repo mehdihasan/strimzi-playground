@@ -1,0 +1,1 @@
+To work with this project, go to the Schemas project first. Install that into your m2 repo. Then come back to this project.

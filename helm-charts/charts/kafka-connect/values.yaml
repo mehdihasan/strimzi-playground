@@ -1,0 +1,30 @@
+config:
+  connectTopicReplicas: 1
+  enableKafkaConnectorRes: true
+
+connect:
+  log:
+    level: INFO
+
+additional:
+
+replicas: 1
+
+jvmMemory:
+  max: 1g
+  min: 1g
+
+jvmOptions:
+  gcLoggingEnabled: false
+
+image:
+  name: mehdihasan/demo-kafka-connect
+  tag: "30.0"
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 2Gi
+  requests:
+    cpu: 100m
+    memory: 500Mi

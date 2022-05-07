@@ -1,0 +1,77 @@
+kafka:
+  replicas: 1 #3
+  config:
+    offsetsTopicReplicationFactor: 1 #3
+    transactionStateLogReplicationFactor: 1 #3
+    transactionStateLogMinIsr: 1 #2
+    logMessageFormatVersion: "3.1"
+    interBrokerProtocolVersion: "3.1"
+    logCleanupPolicy: compact
+  
+  storage:
+    type: ephemeral
+    size: 10Gi
+    deleteClaim: false
+    class: netapp-qtree
+  resources:
+    limits:
+      cpu: 500m
+      memory: 500Mi
+    requests:
+      cpu: 100m
+      memory: 500Mi
+
+zookeeper:
+  replicas: 3
+  storage:
+    type: ephemeral
+    size: 10Gi
+    deleteClaim: false
+    class: netapp-qtree
+  resources:
+    limits:
+      cpu: 500m
+      memory: 500Mi
+    requests:
+      cpu: 100m
+      memory: 500Mi
+
+
+tlsSidecar:
+  resources:
+    limits:
+      cpu: 500m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 64Mi
+
+
+topicOperator:
+  resources:
+    limits:
+      cpu: 500m
+      memory: 300Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+
+
+userOperator:
+  resources:
+    limits:
+      cpu: 500m
+      memory: 300Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+
+
+kafkaExporter:
+  resources:
+    limits:
+      cpu: 500m
+      memory: 700Mi
+    requests:
+      cpu: 100m
+      memory: 500Mi

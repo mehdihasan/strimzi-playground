@@ -1,0 +1,18 @@
+{{- range .Values.topics }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: {{ .name | lower | replace "_" "-" }}
+  labels:
+    strimzi.io/cluster: {{ $.Values.global.kafkaClusterName }}
+spec:
+  topicName: {{ .name }}
+  partitions: {{ .partitions | default 1 }}
+  replicas: {{ .replicas | default 3 }}
+  config:
+    cleanup.policy: {{ .cleanupPolicy }}
+    retention.ms: {{ .retentionMs | default 604800000 }}
+    max.message.bytes: {{ .maxMessageBytes | default "5000000" }}
+    {{ if .config }} {{ toYaml .config | nindent 4 }} {{ end }}
+{{ end }}

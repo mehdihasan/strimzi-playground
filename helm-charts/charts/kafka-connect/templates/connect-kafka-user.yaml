@@ -1,0 +1,13 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  labels:
+    strimzi.io/cluster: {{ .Values.global.kafkaClusterName }}
+  name: {{ .Values.global.kafkaConnectClusterName }}
+spec:
+  authentication:
+    type: scram-sha-512
+status:
+  observedGeneration: 1
+  secret: {{ .Values.global.kafkaConnectClusterName }}
+  username: {{ .Values.global.kafkaConnectClusterName }}

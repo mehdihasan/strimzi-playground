@@ -1,0 +1,14 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: logging-configmap
+data:
+  log4j.properties: |
+    log4j.appender.CONSOLE=org.apache.log4j.ConsoleAppender
+    log4j.appender.CONSOLE.layout=org.apache.log4j.PatternLayout
+    log4j.appender.CONSOLE.layout.ConversionPattern=%d{yyyy-MM-dd'T'HH:mm:ss.SSS'Z'} [demo] [kafka] [%c] [%t] %p: %m %n
+    connect.root.logger.level=INFO
+    log4j.rootLogger=${connect.root.logger.level}, CONSOLE
+    log4j.logger.org.apache.zookeeper=ERROR
+    log4j.logger.org.I0Itec.zkclient=ERROR
+    log4j.logger.org.reflections=ERROR

@@ -1,0 +1,67 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnect
+metadata:
+  name: {{ .Values.global.kafkaConnectClusterName }}
+  annotations:
+    {{ if .Values.config.enableKafkaConnectorRes }}
+    strimzi.io/use-connector-resources: "true"
+    {{ end }}
+spec:
+  image: {{ .Values.image.name }}:{{ .Values.image.tag }}
+  authentication:
+    passwordSecret:
+      password: password
+      secretName: {{ .Values.global.kafkaConnectClusterName }}
+    type: scram-sha-512
+    username: {{ .Values.global.kafkaConnectClusterName }}
+  bootstrapServers: {{ .Values.global.kafkaClusterName }}-kafka-bootstrap:9093
+  config:
+    config.storage.replication.factor: {{ .Values.config.connectTopicReplicas }}
+    key.converter: org.apache.kafka.connect.storage.StringConverter
+    key.converter.schemas.enable: false
+    offset.storage.replication.factor: {{ .Values.config.connectTopicReplicas }}
+    status.storage.replication.factor: {{ .Values.config.connectTopicReplicas }}
+    value.converter: org.apache.kafka.connect.storage.StringConverter
+    value.converter.schemas.enable: false
+    producer.buffer.memory: 16777216
+    offset.flush.timeout.ms: 10000
+    connector.client.config.override.policy: All
+    config.providers: file
+    config.providers.file.class: org.apache.kafka.common.config.provider.FileConfigProvider
+    producer.max.request.size: {{ .Values.global.maxSize }}
+    consumer.max.partition.fetch.bytes: {{ .Values.global.maxSize }}
+  # externalConfiguration:
+  #   volumes:
+  #   - name: demo-trust-store
+  #     secret:
+  #       secretName: demo-trust-store
+  jvmOptions:
+    "-Xmx": "{{ .Values.jvmMemory.max }}"
+    "-Xms": "{{ .Values.jvmMemory.min }}"
+    "gcLoggingEnabled": {{ .Values.jvmOptions.gcLoggingEnabled }}
+  metricsConfig:
+    type: jmxPrometheusExporter
+    valueFrom:
+      configMapKeyRef:
+        name: connect-metrics
+        key: metrics-config.yml
+  replicas: {{ .Values.replicas }}
+  resources: {{ if .Values.global.hasRes }}
+    limits:
+      cpu: {{ .Values.resources.limits.cpu }}
+      memory: {{ .Values.resources.limits.memory }}
+    requests:
+      cpu: {{ .Values.resources.requests.cpu }}
+      memory: {{ .Values.resources.requests.memory }}
+    {{ else }} {} {{ end }}
+  logging:
+    type: external
+    valueFrom:
+      configMapKeyRef:
+        name: logging-configmap
+        key: log4j.properties
+  tls:
+    trustedCertificates:
+    - certificate: ca.crt
+      secretName: {{ .Values.global.kafkaClusterName }}-cluster-ca-cert
+  version: {{ .Values.global.kafkaVersion }}

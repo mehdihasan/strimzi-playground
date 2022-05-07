@@ -1,0 +1,38 @@
+oracle-db/oracle-data-12c/*
+
+bintray.sh
+
+*target/
+*.idea/
+*.project
+*.classpath
+
+
+
+# Maven specific
+**/target/*
+
+# IntelliJ IDEA specific
+.idea/
+*.iml
+
+# Eclipse specific
+**/.project
+**/.settings/*
+**/.prefs
+**/.classpath
+**/.factorypath
+/target/
+
+**/dependency-reduced-pom.xml
+
+# VSCode
+.vscode/
+
+
+# JAR
+*.jar
+
+
+# OS
+**.DS_Store

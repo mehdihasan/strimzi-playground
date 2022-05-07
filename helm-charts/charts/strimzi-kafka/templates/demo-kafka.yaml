@@ -1,0 +1,179 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: Kafka
+metadata:
+  name: {{ .Values.global.kafkaClusterName }}
+spec:
+  kafka:
+    version: {{ .Values.global.kafkaVersion }}
+    replicas: {{ .Values.kafka.replicas }}
+    listeners:
+      - name: external
+        port: 9094
+        type: internal #route
+        tls: true
+        authentication:
+          type: scram-sha-512
+      - name: tls
+        port: 9093
+        type: internal
+        tls: true
+        authentication:
+          type: scram-sha-512
+      - name: plain
+        port: 9092
+        type: internal
+        tls: false
+    {{ if .Values.global.hasProbes }}
+    readinessProbe:
+      initialDelaySeconds: 500
+      timeoutSeconds: 5
+    livenessProbe:
+      initialDelaySeconds: 500
+      timeoutSeconds: 5
+    {{ end }}
+    config: {{ if .Values.kafka.config.additional }} {{ toYaml .Values.kafka.config.additional | nindent 6 }} {{ end }}
+      offsets.topic.replication.factor: {{ .Values.kafka.config.offsetsTopicReplicationFactor }}
+      transaction.state.log.replication.factor: {{ .Values.kafka.config.transactionStateLogReplicationFactor }}
+      transaction.state.log.min.isr: {{ .Values.kafka.config.transactionStateLogMinIsr }}
+      log.message.format.version: {{ .Values.kafka.config.logMessageFormatVersion | squote }}
+      inter.broker.protocol.version: {{ .Values.kafka.config.logMessageFormatVersion | squote }}
+      log.cleanup.policy: {{ .Values.kafka.config.logCleanupPolicy }}
+      message.max.bytes: {{ .Values.global.maxSize }}
+      replica.fetch.max.bytes: {{ .Values.global.maxSize }}
+      max.partition.fetch.bytes: {{ .Values.global.maxSize }}
+      max.request.size: {{ .Values.global.maxSize }}
+      replica.lag.time.max.ms: 60000
+      zookeeper.session.timeout.ms: 30000
+      default.replication.factor: {{ .Values.kafka.config.offsetsTopicReplicationFactor }}
+      min.insync.replicas: {{ .Values.kafka.config.transactionStateLogMinIsr }}
+    storage:
+      type: {{ .Values.kafka.storage.type }}
+      # do not resize the volumes... this will cause out-of-sync issues
+      {{ if eq .Values.kafka.storage.type "persistent-claim" }}
+      size: {{ .Values.kafka.storage.size }} # do not edit this if the kafka cluster is deployed
+      deleteClaim: {{ .Values.kafka.storage.deleteClaim }}
+      class: {{ .Values.kafka.storage.class }}
+      {{ end }}
+    resources: {{ if .Values.global.hasRes }}
+      limits:
+        cpu: {{ .Values.kafka.resources.limits.cpu }}
+        memory: {{ .Values.kafka.resources.limits.memory }}
+      requests:
+        cpu: {{ .Values.kafka.resources.requests.cpu }}
+        memory: {{ .Values.kafka.resources.requests.memory }}
+      {{ else }} {} {{ end }}
+    {{ if or (eq .Values.global.environment "local") (eq .Values.global.environment "dev") (eq .Values.global.environment "stage") }}
+    {{ else }}
+    {{ end }}
+    metricsConfig:
+      type: jmxPrometheusExporter
+      valueFrom:
+        configMapKeyRef:
+          name: kafka-metrics
+          key: kafka-metrics-config.yml
+  zookeeper:
+    replicas: {{ .Values.zookeeper.replicas }}
+    {{ if .Values.global.hasProbes }}
+    readinessProbe:
+      initialDelaySeconds: 500
+      timeoutSeconds: 5
+    livenessProbe:
+      initialDelaySeconds: 500
+      timeoutSeconds: 5
+    {{ end }}
+    config:
+      tcpKeepAlive: true
+    storage:
+      type: {{ .Values.zookeeper.storage.type }}
+      # do not resize the volumes... this will cause out-of-sync issues
+      {{ if eq .Values.zookeeper.storage.type "persistent-claim" }}
+      size: {{ .Values.zookeeper.storage.size }} # do not edit this if the kafka cluster is deployed
+      deleteClaim: {{ .Values.zookeeper.storage.deleteClaim }}
+      class: {{ .Values.zookeeper.storage.class }}
+      {{ end }}
+    resources:
+      {{ if .Values.global.hasRes }}
+      limits:
+        cpu: {{ .Values.zookeeper.resources.limits.cpu }}
+        memory: {{ .Values.zookeeper.resources.limits.memory }}
+      requests:
+        cpu: {{ .Values.zookeeper.resources.requests.cpu }}
+        memory: {{ .Values.zookeeper.resources.requests.memory }}
+      {{ else }}
+        {}
+      {{ end }}
+    metricsConfig:
+      type: jmxPrometheusExporter
+      valueFrom:
+        configMapKeyRef:
+          name: kafka-metrics
+          key: zookeeper-metrics-config.yml
+    {{ if or (eq .Values.global.environment "local") (eq .Values.global.environment "dev") (eq .Values.global.environment "stage")}}
+    {{ else }}
+    {{ end }}
+  entityOperator:
+    topicOperator:
+      jvmOptions:
+        javaSystemProperties:
+        - name: log4j2.formatMsgNoLookups
+          value: "true"
+      resources:
+        {{ if .Values.global.hasRes }}
+        limits:
+          cpu: {{ .Values.topicOperator.resources.limits.cpu }}
+          memory: {{ .Values.topicOperator.resources.limits.memory }}
+        requests:
+          cpu: {{ .Values.topicOperator.resources.requests.cpu }}
+          memory: {{ .Values.topicOperator.resources.requests.memory }}
+        {{ else }}
+          {}
+        {{ end }}
+    userOperator:
+      jvmOptions:
+        javaSystemProperties:
+        - name: log4j2.formatMsgNoLookups
+          value: "true"
+      resources:
+        {{ if .Values.global.hasRes }}
+        limits:
+          cpu: {{ .Values.userOperator.resources.limits.cpu }}
+          memory: {{ .Values.userOperator.resources.limits.memory }}
+        requests:
+          cpu: {{ .Values.userOperator.resources.requests.cpu }}
+          memory: {{ .Values.userOperator.resources.requests.memory }}
+        {{ else }}
+          {}
+        {{ end }}
+    {{ if eq .Values.global.environment "local" }}
+    {{ else }}
+    tlsSidecar:
+      resources: 
+        {{ if .Values.global.hasRes }}
+        requests: 
+          cpu: {{ .Values.tlsSidecar.resources.requests.cpu }}
+          memory: {{ .Values.tlsSidecar.resources.requests.memory }}
+        limits:
+          cpu: {{ .Values.tlsSidecar.resources.limits.cpu }}
+          memory: {{ .Values.tlsSidecar.resources.limits.memory }}
+        {{ else }}
+          {}
+        {{ end }}
+    {{ end }}
+  kafkaExporter:
+    {{ if eq .Values.global.environment "local" }}
+    {{ else }}
+    resources:
+      {{ if .Values.global.hasRes }}
+      limits:
+        cpu: {{ .Values.kafkaExporter.resources.limits.cpu }}
+        memory: {{ .Values.kafkaExporter.resources.limits.memory }}
+      requests:
+        cpu: {{ .Values.kafkaExporter.resources.requests.cpu }}
+        memory: {{ .Values.kafkaExporter.resources.requests.memory }}
+      {{ else }}
+        {}
+      {{ end }}
+    {{ end }}
+    topicRegex: ".*"
+    groupRegex: ".*"
+
