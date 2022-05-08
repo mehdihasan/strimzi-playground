@@ -17,8 +17,6 @@ spec:
         port: 9093
         type: internal
         tls: true
-        authentication:
-          type: scram-sha-512
       - name: plain
         port: 9092
         type: internal

@@ -1,7 +1,6 @@
 apiVersion: v2
-name: kafka-demo
-description: A Helm chart to deploy Kafka, Zookeeper & Kafka Connect
-
+name: kafka-connectors
+description: A Helm chart for the Kafka Connectors
 # A chart can be either an 'application' or a 'library' chart.
 #
 # Application charts are a collection of templates that can be packaged into versioned archives
@@ -12,6 +11,10 @@ description: A Helm chart to deploy Kafka, Zookeeper & Kafka Connect
 # pipeline. Library charts do not define any templates and therefore cannot be deployed.
 type: application
 
+dependencies: # A list of the chart requirements (optional)
+  - name: kafka-connect
+    version: 2.0.0
+    
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 version: 2.0.0
@@ -19,7 +22,3 @@ version: 2.0.0
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
 appVersion: 2.0.0
-
-maintainers: # (optional)
-  - name: Mehdi
-    email: mail@mehdihasan.me

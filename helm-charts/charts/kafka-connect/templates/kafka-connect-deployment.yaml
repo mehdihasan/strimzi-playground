@@ -8,22 +8,26 @@ metadata:
     {{ end }}
 spec:
   image: {{ .Values.image.name }}:{{ .Values.image.tag }}
-  authentication:
-    passwordSecret:
-      password: password
-      secretName: {{ .Values.global.kafkaConnectClusterName }}
-    type: scram-sha-512
-    username: {{ .Values.global.kafkaConnectClusterName }}
+  # authentication:
+  #   passwordSecret:
+  #     password: password
+  #     secretName: {{ .Values.global.kafkaConnectClusterName }}
+  #   type: scram-sha-512
+  #   username: {{ .Values.global.kafkaConnectClusterName }}
   bootstrapServers: {{ .Values.global.kafkaClusterName }}-kafka-bootstrap:9093
   config:
+    group.id: connect-cluster
+    offset.storage.topic: connect-cluster-offsets
+    config.storage.topic: connect-cluster-configs
+    status.storage.topic: connect-cluster-status
     config.storage.replication.factor: {{ .Values.config.connectTopicReplicas }}
-    key.converter: org.apache.kafka.connect.storage.StringConverter
-    key.converter.schemas.enable: false
     offset.storage.replication.factor: {{ .Values.config.connectTopicReplicas }}
     status.storage.replication.factor: {{ .Values.config.connectTopicReplicas }}
+    key.converter: org.apache.kafka.connect.storage.StringConverter
+    key.converter.schemas.enable: false
     value.converter: org.apache.kafka.connect.storage.StringConverter
     value.converter.schemas.enable: false
-    producer.buffer.memory: 16777216
+    producer.buffer.memory: {{ .Values.global.maxSize }}
     offset.flush.timeout.ms: 10000
     connector.client.config.override.policy: All
     config.providers: file
@@ -36,8 +40,8 @@ spec:
   #     secret:
   #       secretName: demo-trust-store
   jvmOptions:
-    "-Xmx": "{{ .Values.jvmMemory.max }}"
-    "-Xms": "{{ .Values.jvmMemory.min }}"
+    # "-Xmx": "{{ .Values.jvmMemory.max }}"
+    # "-Xms": "{{ .Values.jvmMemory.min }}"
     "gcLoggingEnabled": {{ .Values.jvmOptions.gcLoggingEnabled }}
   metricsConfig:
     type: jmxPrometheusExporter

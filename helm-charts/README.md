@@ -1,11 +1,13 @@
 # Deployment using Helm Charts
 
 
-helm template strimzi-kafka . -n kafka
-helm upgrade --install -f values.yaml strimzi-kafka . -n kafka
+helm status demo-kafka-demo -n kafka
+
+helm template demo-kafka-demo . -n kafka
+helm upgrade --install -f valuesl demo-kafka-demo . -n kafka
 
 
-helm uninstall strimzi-kafka -n kafka
+helm uninstall demo-kafka-demo -n kafka
 
 
 ## Experiments

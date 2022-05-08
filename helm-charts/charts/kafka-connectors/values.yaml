@@ -1,0 +1,25 @@
+connectors:
+
+  - name: weather_source_connector_stockholm_v0
+    class: com.custom.kafka.connect.WeatherAPIConnector
+    tasksMax: 1
+    config:
+      open.weather.api.key: 8210a492417fb274440f643f9fb1ff6b
+      cities: Stockholm
+      kafka.topic: weather-data-stockholm-v0
+
+  - name: weather_source_connector_dhaka_v0
+    class: com.custom.kafka.connect.WeatherAPIConnector
+    tasksMax: 1
+    config:
+      open.weather.api.key: 8210a492417fb274440f643f9fb1ff6b
+      cities: Dhaka
+      kafka.topic: weather-data-dhaka-v0
+
+  - name: weather_source_connector_ollbia_v0
+    class: com.custom.kafka.connect.WeatherAPIConnector
+    tasksMax: 1
+    config:
+      open.weather.api.key: 8210a492417fb274440f643f9fb1ff6b
+      cities: Ollbia
+      kafka.topic: weather-data-ollbia-v0

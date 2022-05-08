@@ -1,0 +1,13 @@
+{{- range .Values.connectors }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: {{ .name | lower | replace "_" "-" }}
+  labels:
+    strimzi.io/cluster: {{ $.Values.global.kafkaConnectClusterName }}
+spec:
+  class: {{ .class }}
+  tasksMax: {{ .tasksMax }}
+  config: {{ if .config }} {{ toYaml .config | nindent 4 }} {{ end }}
+{{ end }}

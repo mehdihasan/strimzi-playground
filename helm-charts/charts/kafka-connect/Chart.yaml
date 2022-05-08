@@ -9,8 +9,6 @@ type: application # or library
 #   - A list of URLs to source code for this project (optional)
 
 dependencies: # A list of the chart requirements (optional)
-  - name: strimzi-kafka
-    version: 2.0.0
   - name: kafka-topic
     version: 2.0.0
 
