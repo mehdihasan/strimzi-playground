@@ -1,4 +1,8 @@
 - need to write test code for the connector
 - running the connectors ?
 - why does the strimzi operator pod is getting crshahed ?
+  - could be resoure issue, as no errors
 - running the grafana and promethoues
+- running the produder app
+- running the consumer app
+- running the streams app
