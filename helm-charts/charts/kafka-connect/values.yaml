@@ -8,7 +8,7 @@ connect:
 
 additional:
 
-replicas: 3
+replicas: 1
 
 jvmMemory:
   max: 1g

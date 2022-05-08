@@ -1,19 +1,19 @@
 topics:
 
-  - name: weather-data-stockholm-v0
+  - name: weather-data-lund-v0
     cleanupPolicy: delete
     retentionMs: 604800000
     maxMessageBytes: "5000000"
-    replicas: 3
+    replicas: 1
 
   - name: weather-data-dhaka-v0
     cleanupPolicy: delete
     retentionMs: 604800000
     maxMessageBytes: "5000000"
-    replicas: 3
+    replicas: 1
 
-  - name: weather-data-ollbia-v0
+  - name: weather-data-rome-v0
     cleanupPolicy: delete
     retentionMs: 604800000
     maxMessageBytes: "5000000"
-    replicas: 3
+    replicas: 1

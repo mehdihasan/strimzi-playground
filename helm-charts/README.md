@@ -1,13 +1,13 @@
 # Deployment using Helm Charts
 
 
-helm status demo-kafka-demo -n kafka
+helm status demo-kafka -n kafka
 
-helm template demo-kafka-demo . -n kafka
-helm upgrade --install -f valuesl demo-kafka-demo . -n kafka
+helm template demo-kafka . -n kafka
+helm upgrade --install -f valuesl demo-kafka . -n kafka
 
 
-helm uninstall demo-kafka-demo -n kafka
+helm uninstall demo-kafka -n kafka
 
 
 ## Experiments

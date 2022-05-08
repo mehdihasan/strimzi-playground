@@ -1,0 +1,4 @@
+- need to write test code for the connector
+- running the connectors ?
+- why does the strimzi operator pod is getting crshahed ?
+- running the grafana and promethoues
