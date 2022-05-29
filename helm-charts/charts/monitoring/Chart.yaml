@@ -1,0 +1,15 @@
+# A YAML file containing information about the chart
+
+apiVersion: v2
+name: monitoring
+version: 2.0.0
+description: Prometheus and Grafana
+type: application # or library
+# sources:
+#   - A list of URLs to source code for this project (optional)
+
+# icon: A URL to an SVG or PNG image to be used as an icon (optional).
+appVersion: 2.0.0
+deprecated: false
+# annotations:
+#   example: A list of annotations keyed by name (optional).

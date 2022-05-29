@@ -73,22 +73,32 @@ data:
       help: "Kafka $1 JMX metric type $2"
       type: GAUGE
 
+    #kafka.connect:type=connector-metrics,connector="{connector}"
+    - pattern: 'kafka.(.+)<type=connector-metrics, connector=(.+)><>(connector-class|connector-type|connector-version|status): (.+)'
+      name: kafka_connect_connector_$3
+      value: 1
+      labels:
+        connector: "$2"
+        $3: "$4"
+      help: "Kafka Connect $3 JMX metric type connector"
+      type: GAUGE
+
     #kafka.connect:type=connector-task-metrics,connector="{connector}",task="{task}<> status"
     - pattern: 'kafka.connect<type=connector-task-metrics, connector=(.+), task=(.+)><>status: ([a-z-]+)'
-      name: kafka_connect_connector_status
+      name: kafka_connect_connector_task_status
       value: 1
       labels:
         connector: "$1"
         task: "$2"
         status: "$3"
-      help: "Kafka Connect JMX Connector status"
+      help: "Kafka Connect JMX Connector task status"
       type: GAUGE
 
     #kafka.connect:type=task-error-metrics,connector="{connector}",task="{task}"
     #kafka.connect:type=source-task-metrics,connector="{connector}",task="{task}"
     #kafka.connect:type=sink-task-metrics,connector="{connector}",task="{task}"
     #kafka.connect:type=connector-task-metrics,connector="{connector}",task="{task}"
-    - pattern: kafka.connect<type=(.+)-metrics, connector=(.+), task=(.+)><>(.+-total|.+-count|.+-ms|.+-ratio|.+-avg|.+-failures|.+-requests|.+-timestamp|.+-logged|.+-errors|.+-retries|.+-skipped)
+    - pattern: kafka.connect<type=(.+)-metrics, connector=(.+), task=(.+)><>(.+-total|.+-count|.+-ms|.+-ratio|.+-seq-no|.+-rate|.+-max|.+-avg|.+-failures|.+-requests|.+-timestamp|.+-logged|.+-errors|.+-retries|.+-skipped)
       name: kafka_connect_$1_$4
       labels:
         connector: "$2"

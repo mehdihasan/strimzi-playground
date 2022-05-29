@@ -4,7 +4,7 @@
 helm status demo-kafka -n kafka
 
 helm template demo-kafka . -n kafka
-helm upgrade --install -f valuesl demo-kafka . -n kafka
+helm upgrade --install -f values.yaml strimzi-kafka . -n kafka
 
 
 helm uninstall demo-kafka -n kafka

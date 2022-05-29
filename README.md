@@ -14,6 +14,10 @@
    ```bash
    kubectl create -f 'https://strimzi.io/install/latest?namespace=kafka' -n kafka
    ```
-4. build the kafka connect docker image
-5. build docker images for the producer, consumer and other utility applications
-6. deploy the helm chart
+4. install the prometheus operators.
+   ```bash
+   kubectl create -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/master/bundle.yaml -n kafka
+   ```
+5. build the kafka connect docker image
+6. build docker images for the producer, consumer and other utility applications
+7. deploy the helm chart
