@@ -39,7 +39,7 @@ public class WeatherAPIConfig extends AbstractConfig {
         String cities = System.getenv(CITIES) == null
                 ? "Dhaka" : System.getenv(CITIES);
         String pollFrequency = System.getenv(POLL_FREQUENCY) == null
-                ? "300000" : System.getenv(POLL_FREQUENCY);
+                ? "30000" : System.getenv(POLL_FREQUENCY);
         String kafkaTopic = System.getenv(KAFKA_TOPIC) == null
                 ? "weather" : System.getenv(KAFKA_TOPIC);
         Map<String, String> originals = new HashMap<>();
