@@ -24,7 +24,7 @@ connectors:
 
   - name: weather_source_connector_v2
     class: com.custom.kafka.connect.WeatherAPIConnector
-    tasksMax: 1
+    tasksMax: 3
     config:
       open.weather.api.key: 8210a492417fb274440f643f9fb1ff6b
       cities: Delhi,Osaka,Dhaka
