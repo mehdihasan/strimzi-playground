@@ -1,6 +1,7 @@
 package com.custom.kafka.connect;
 
 import com.custom.kafka.connect.model.Weather;
+import com.google.gson.Gson;
 import org.apache.kafka.connect.data.Struct;
 import org.apache.kafka.connect.source.SourceRecord;
 import org.apache.kafka.connect.source.SourceTask;
@@ -17,6 +18,7 @@ public class WeatherAPITask extends SourceTask {
 
     private WeatherAPIConfig config;
     private WeatherAPIClient client;
+    private Gson gson;
 
     private AtomicBoolean isRunning = new AtomicBoolean(false);
 
@@ -25,6 +27,7 @@ public class WeatherAPITask extends SourceTask {
         Objects.requireNonNull(props);
         config = new WeatherAPIConfig(props);
         client = new WeatherAPIClient(config);
+        gson = new Gson();
         isRunning.set(true);
     }
 
@@ -36,10 +39,26 @@ public class WeatherAPITask extends SourceTask {
 
         Thread.sleep(config.getPollFrequency());
 
-        return client.getCurrentWeather().stream()
-                .map(weather -> new SourceRecord(sourcePartition(weather), sourceOffset(), config.getKafkaTopic(),
-                        KEY_SCHEMA, buildKey(weather.getId()), VALUE_SCHEMA, buildValue(weather)))
-                .collect(Collectors.toList());
+        if (config.isStruct()) {
+            return client.getCurrentWeather().stream()
+                    .map(weather -> new SourceRecord(sourcePartition(weather)
+                            , sourceOffset()
+                            , config.getKafkaTopic()
+                            , KEY_SCHEMA
+                            , buildKey(weather.getId())
+                            , VALUE_SCHEMA, buildValue(weather)))
+                    .collect(Collectors.toList());
+        } else {
+            return client.getCurrentWeather().stream()
+                    .map(weather -> new SourceRecord(sourcePartition(weather)
+                            , sourceOffset()
+                            , config.getKafkaTopic()
+                            , null
+                            , weather.getId()
+                            , null
+                            , gson.toJson(weather)))
+                    .collect(Collectors.toList());
+        }
     }
 
     private Map<String, ?> sourcePartition(Weather weather) {
@@ -59,14 +78,18 @@ public class WeatherAPITask extends SourceTask {
     private Struct buildValue(Weather weather) {
         return new Struct(VALUE_SCHEMA).put(NAME, weather.getName())
                 .put(MAIN, new Struct(MAIN_SCHEMA).put(TEMP, weather.getMain().getTemp())
-                        .put(PRESSURE, weather.getMain().getPressure()).put(HUMIDITY, weather.getMain().getHumidity())
-                        .put(TEMP_MIN, weather.getMain().getTempMin()).put(TEMP_MAX, weather.getMain().getTempMax()))
+                        .put(PRESSURE, weather.getMain().getPressure())
+                        .put(HUMIDITY, weather.getMain().getHumidity())
+                        .put(TEMP_MIN, weather.getMain().getTempMin())
+                        .put(TEMP_MAX, weather.getMain().getTempMax()))
                 .put(WIND,
                         new Struct(WIND_SCHEMA).put(SPEED, weather.getWind().getSpeed()).put(DEG,
                                 weather.getWind().getDeg()))
                 .put(WEATHER, weather.getWeather().stream()
-                        .map(weatherDetails -> new Struct(WEATHER_SCHEMA).put(ID, weatherDetails.getId())
-                                .put(MAIN, weatherDetails.getMain()).put(DESCRIPTION, weatherDetails.getDescription())
+                        .map(weatherDetails -> new Struct(WEATHER_SCHEMA)
+                                .put(ID, weatherDetails.getId())
+                                .put(MAIN, weatherDetails.getMain())
+                                .put(DESCRIPTION, weatherDetails.getDescription())
                                 .put(ICON, weatherDetails.getIcon()))
                         .collect(toList()));
     }

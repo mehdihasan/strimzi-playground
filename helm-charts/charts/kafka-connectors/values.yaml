@@ -1,25 +1,36 @@
 connectors:
 
-  - name: weather_source_connector_stockholm_v0
+  - name: weather_source_connector_v0
     class: com.custom.kafka.connect.WeatherAPIConnector
     tasksMax: 1
     config:
       open.weather.api.key: 8210a492417fb274440f643f9fb1ff6b
-      cities: Lund
-      kafka.topic: weather-data-lund-v0
+      cities: Lund,Oslo
+      kafka.topic: weather-data-v0
+      value.converter: org.apache.kafka.connect.storage.StringConverter
+      key.converter: org.apache.kafka.connect.storage.StringConverter
+      key.converter.schemas.enable: false
+      value.converter.schemas.enable: false
+      is.struct: false
 
-  - name: weather_source_connector_dhaka_v0
+  - name: weather_source_connector_v1
     class: com.custom.kafka.connect.WeatherAPIConnector
     tasksMax: 1
     config:
       open.weather.api.key: 8210a492417fb274440f643f9fb1ff6b
-      cities: Dhaka
-      kafka.topic: weather-data-dhaka-v0
+      cities: Berlin,Rome
+      kafka.topic: weather-data-v1
+      is.struct: false
 
-  - name: weather_source_connector_ollbia_v0
+  - name: weather_source_connector_v2
     class: com.custom.kafka.connect.WeatherAPIConnector
     tasksMax: 1
     config:
       open.weather.api.key: 8210a492417fb274440f643f9fb1ff6b
-      cities: Rome
-      kafka.topic: weather-data-rome-v0
+      cities: Delhi,Osaka,Dhaka
+      kafka.topic: weather-data-v2
+      value.converter: org.apache.kafka.connect.converters.ByteArrayConverter
+      key.converter: org.apache.kafka.connect.converters.ByteArrayConverter
+      key.converter.schemas.enable: true
+      value.converter.schemas.enable: true
+      is.struct: true      

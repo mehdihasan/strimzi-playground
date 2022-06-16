@@ -1,5 +1,26 @@
 topics:
 
+  - name: weather-data-v0
+    cleanupPolicy: delete
+    retentionMs: 604800000
+    maxMessageBytes: "5000000"
+    replicas: 1
+    partitions: 5
+
+  - name: weather-data-v1
+    cleanupPolicy: delete
+    retentionMs: 604800000
+    maxMessageBytes: "5000000"
+    replicas: 1
+    partitions: 5
+
+  - name: weather-data-v2
+    cleanupPolicy: delete
+    retentionMs: 604800000
+    maxMessageBytes: "5000000"
+    replicas: 1
+    partitions: 5
+
   - name: weather-data-lund-v0
     cleanupPolicy: delete
     retentionMs: 604800000

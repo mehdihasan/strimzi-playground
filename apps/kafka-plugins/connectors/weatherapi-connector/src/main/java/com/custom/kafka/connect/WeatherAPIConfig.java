@@ -20,10 +20,14 @@ public class WeatherAPIConfig extends AbstractConfig {
     public static final String KAFKA_TOPIC = "kafka.topic";
     private static final String KAFKA_TOPIC_DOC = "Kafka Topic to send data to";
 
+    public static final String IS_STRUCT = "is.struct";
+    private static final String IS_STRUCT_DOC = "Is Struct format required";
+
     private final String openWeatherApiKey;
     private final String cities;
     private final Long pollFrequency;
     private final String kafkaTopic;
+    private final Boolean isStruck;
 
     public WeatherAPIConfig(Map<String, ?> originals) {
         super(config(), originals);
@@ -31,6 +35,7 @@ public class WeatherAPIConfig extends AbstractConfig {
         this.cities = this.getString(CITIES);
         this.pollFrequency = this.getLong(POLL_FREQUENCY);
         this.kafkaTopic = this.getString(KAFKA_TOPIC);
+        this.isStruck = this.getBoolean(IS_STRUCT);
     }
 
     public static WeatherAPIConfig fromEnv() {
@@ -39,7 +44,7 @@ public class WeatherAPIConfig extends AbstractConfig {
         String cities = System.getenv(CITIES) == null
                 ? "Dhaka" : System.getenv(CITIES);
         String pollFrequency = System.getenv(POLL_FREQUENCY) == null
-                ? "30000" : System.getenv(POLL_FREQUENCY);
+                ? "60000" : System.getenv(POLL_FREQUENCY);
         String kafkaTopic = System.getenv(KAFKA_TOPIC) == null
                 ? "weather" : System.getenv(KAFKA_TOPIC);
         Map<String, String> originals = new HashMap<>();
@@ -52,11 +57,11 @@ public class WeatherAPIConfig extends AbstractConfig {
 
     public static ConfigDef config() {
         return new ConfigDef()
-                .define(OPEN_WEATHER_API_KEY, ConfigDef.Type.STRING, ConfigDef.Importance.HIGH,
-                        OPEN_WEATHER_API_KEY_DOC)
-                .define(CITIES, ConfigDef.Type.STRING, ConfigDef.Importance.HIGH, CITIES_DOC)
-                .define(POLL_FREQUENCY, ConfigDef.Type.LONG, 100000L, ConfigDef.Importance.MEDIUM, POLL_FREQUENCY_DOC)
-                .define(KAFKA_TOPIC, ConfigDef.Type.STRING, ConfigDef.Importance.HIGH, KAFKA_TOPIC_DOC);
+            .define(OPEN_WEATHER_API_KEY, ConfigDef.Type.STRING, ConfigDef.Importance.HIGH, OPEN_WEATHER_API_KEY_DOC)
+            .define(CITIES, ConfigDef.Type.STRING, ConfigDef.Importance.HIGH, CITIES_DOC)
+            .define(POLL_FREQUENCY, ConfigDef.Type.LONG, 100000L, ConfigDef.Importance.MEDIUM, POLL_FREQUENCY_DOC)
+            .define(KAFKA_TOPIC, ConfigDef.Type.STRING, ConfigDef.Importance.HIGH, KAFKA_TOPIC_DOC)
+            .define(IS_STRUCT, ConfigDef.Type.BOOLEAN, true, ConfigDef.Importance.HIGH, IS_STRUCT_DOC);
     }
 
     public String getOpenWeatherApiKey() {
@@ -73,5 +78,9 @@ public class WeatherAPIConfig extends AbstractConfig {
 
     public String getKafkaTopic() {
         return kafkaTopic;
+    }
+
+    public Boolean isStruct() {
+        return isStruck;
     }
 }
