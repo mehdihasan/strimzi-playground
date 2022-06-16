@@ -5,10 +5,7 @@ import org.apache.kafka.connect.connector.Task;
 import org.apache.kafka.connect.source.SourceConnector;
 import org.apache.kafka.connect.util.ConnectorUtils;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class WeatherAPIConnector extends SourceConnector {
@@ -17,7 +14,8 @@ public class WeatherAPIConnector extends SourceConnector {
 
     @Override
     public void start(Map<String, String> props) {
-        config = WeatherAPIConfig.fromEnv();
+        Objects.requireNonNull(props);
+        config = new WeatherAPIConfig(props);
     }
 
     @Override

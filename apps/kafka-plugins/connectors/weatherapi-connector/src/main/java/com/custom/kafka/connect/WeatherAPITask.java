@@ -5,10 +5,7 @@ import org.apache.kafka.connect.data.Struct;
 import org.apache.kafka.connect.source.SourceRecord;
 import org.apache.kafka.connect.source.SourceTask;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
@@ -25,7 +22,8 @@ public class WeatherAPITask extends SourceTask {
 
     @Override
     public void start(Map<String, String> props) {
-        config = WeatherAPIConfig.fromEnv();
+        Objects.requireNonNull(props);
+        config = new WeatherAPIConfig(props);
         client = new WeatherAPIClient(config);
         isRunning.set(true);
     }
