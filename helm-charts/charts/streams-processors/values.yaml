@@ -4,9 +4,11 @@ processors:
     replicas: 1
     image:
       repository: mehdihasan/demo-streams-processor-spring
-      tag: "0.0.2-SNAPSHOT"
+      tag: "0.0.3-SNAPSHOT"
       pullPolicy: Always
     env:
+      - name: APP_ID
+        value: streams-app-spring
       - name: BOOTSTRAP_SERVERS
         value: kafka-cluster-1-kafka-bootstrap:9092
       - name: STATE_DIR

@@ -2,8 +2,8 @@ PROJECT_NAME=demo-streams-processor-spring
 DOCKERFILE_DIR     ?= ./
 DOCKER_REGISTRY    ?= docker.io
 DOCKER_ORG         ?= mehdihasan
-DOCKER_TAG         ?= 0.0.2-SNAPSHOT
-DOCKER_VERSION_ARG ?= 0.0.2-SNAPSHOT
+DOCKER_TAG         ?= 0.0.3-SNAPSHOT
+DOCKER_VERSION_ARG ?= 0.0.3-SNAPSHOT
 
 all: docker_build docker_push
 
