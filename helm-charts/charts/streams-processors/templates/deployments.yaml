@@ -1,0 +1,34 @@
+{{- range .Values.processors }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .appName }}
+  labels:
+    app.kubernetes.io/name: {{ .appName }}
+    pipeline: {{ .appName }}
+spec:
+  replicas: {{ .replicas }}
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .appName }}
+      pipeline: {{ .appName }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ .appName }}
+        pipeline: {{ .appName }}
+    spec:
+      containers:
+        - env:
+            {{- range .env }}
+            - name: {{ .name }}
+              value: {{ .value }}
+            {{ end }}
+          image: "{{ .image.repository }}:{{ .image.tag }}"
+          imagePullPolicy: {{ .image.pullPolicy }}
+          name: {{ .appName }}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+{{ end }}

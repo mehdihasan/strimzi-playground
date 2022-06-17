@@ -1,0 +1,21 @@
+processors:
+
+  - appName: streams-processor-spring
+    replicas: 1
+    image:
+      repository: mehdihasan/demo-streams-processor-spring
+      tag: "0.0.2-SNAPSHOT"
+      pullPolicy: Always
+    env:
+      - name: BOOTSTRAP_SERVERS
+        value: kafka-cluster-1-kafka-bootstrap:9092
+      - name: STATE_DIR
+        value: /temp/streams-processor-spring
+      - name: IN_TOPIC_1
+        value: weather-data-v0
+      - name: OUT_TOPIC_1
+        value: weather-data-lund-v0
+      - name: OUT_TOPIC_2
+        value: weather-data-oslo-v0
+      - name: OUT_TOPIC_3
+        value: weather-data-stockholm-v0

@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.demo.streams</groupId>
-    <artifactId>streams-processor</artifactId>
+    <artifactId>streams-processor-avro</artifactId>
     <version>0.1</version>
     <packaging>jar</packaging>
 
@@ -16,6 +16,7 @@
         <slf4j.version>1.7.36</slf4j.version>
         <log4j.version>1.2.17</log4j.version>
         <confluent.version>7.1.1</confluent.version>
+        <avro-maven-plugin.version>1.11.0</avro-maven-plugin.version>
     </properties>
 
     <repositories>
@@ -54,8 +55,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <source>8</source>
+                    <target>8</target>
                 </configuration>
             </plugin>
 
@@ -99,6 +100,24 @@
                 </configuration>
             </plugin>
 
+            <plugin>
+                <groupId>org.apache.avro</groupId>
+                <artifactId>avro-maven-plugin</artifactId>
+                <version>${avro-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>schema</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirectory>${project.basedir}/src/main/avro/</sourceDirectory>
+                            <outputDirectory>${project.basedir}/src/main/java/</outputDirectory>
+<!--                            <outputDirectory>${project.build.directory}/generated-sources/java/</outputDirectory>-->
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
@@ -109,11 +128,22 @@
             <artifactId>kafka-streams</artifactId>
             <version>${kafka.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-avro-serializer</artifactId>
+            <version>${confluent.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-clients</artifactId>
             <version>${kafka.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro</artifactId>
+            <version>${avro-maven-plugin.version}</version>
         </dependency>
 
     </dependencies>
