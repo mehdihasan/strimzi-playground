@@ -79,7 +79,7 @@
                 <mxCell id="20" value="&lt;b&gt;Grafana&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
                     <mxGeometry x="540" y="980" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="22" value="Kafdrop" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="22" value="&lt;b&gt;Kafdrop&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
                     <mxGeometry x="870" y="640" width="120" height="60" as="geometry"/>
                 </mxCell>
             </root>
