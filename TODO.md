@@ -1,8 +1,15 @@
-- need to write test code for the connector
-- running the connectors ?
+- Multi-Cluster MirroeMaker2
+- Kafka Streams App: JSON Validation
+- Kafka Streams App: Publish custom headers with messages
+- Implementation of Kafka REST Proxy (Kafka Bridge)
+- Run Bash Scripted Cron Job to publish messages into Kafka REST Proxy (Kafka Bridge)
 - why does the strimzi operator pod is getting crshahed ?
   - could be resoure issue, as no errors
-- running the grafana and promethoues
+- Test code for the connector
 - running the produder app
 - running the consumer app
-- running the streams app
+- Develop and deploy Kafka Single Message Transform (SMT) into Connect
+- Develop and deploy Converter into Connect
+- [V] running the streams app
+- [V] running the grafana and promethoues
+- [V] running the connectors ?
