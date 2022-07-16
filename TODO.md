@@ -1,7 +1,8 @@
 - Multi-Cluster MirroeMaker2
 - Kafka Streams App: JSON Validation
 - Kafka Streams App: Publish custom headers with messages
-- Implementation of Kafka REST Proxy (Kafka Bridge)
+- Kafka REST Proxy (Kafka Bridge): Basic Implementation
+- Kafka REST Proxy (Kafka Bridge): AuthH & AuthZ 
 - Run Bash Scripted Cron Job to publish messages into Kafka REST Proxy (Kafka Bridge)
 - why does the strimzi operator pod is getting crshahed ?
   - could be resoure issue, as no errors
