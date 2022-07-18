@@ -1,12 +1,18 @@
 # Strimzi Playground
 
 
-## What are places that you should mention the Strimzi/Kafka versions?
+## Knowledge
+1. [What is Kafka?](./docs/KAFKA.md)
+2. [What is Strimzi?](https://strimzi.io/)
+
+
+## Deployent Steps:
+
+### What are places that you should mention the Strimzi/Kafka versions?
 1. [Kafka Connect Dockerfile](build-connect/Dockerfile)
 2. [Helm chart parent values file](helm-charts/values.yaml)
 
-
-## Steps:
+### Todo
 1. Prerequesties: Kubernetes Cluster / Kubectl 
 2. create a new namespace in the k8s
    ```bash
