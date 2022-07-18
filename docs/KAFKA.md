@@ -6,7 +6,7 @@ Apache Kafka is a community distributed streaming platform capable of handling t
 
 Its key strength is its ability to make high volume data available as a real-time stream for consumption in systems with very different requirements – from batch systems like Hadoop, to real-time systems that require low-latency access, to stream processing engines that transform data streams immediately, as they arrive.
 
-![img](./docs/how-kafka-works-1.gif)
+![img](./img/how-kafka-works-1.gif)
 
 Core of Kafka is the storage layer. Designed as a distributed system. Two APIs to access the storage, one for writes and the other for reads. On top of that, we build two additional APIs: connection for integration and kstreams/ksql for processing. 
 
@@ -15,9 +15,10 @@ Core of Kafka is the storage layer. Designed as a distributed system. Two APIs t
 - The compute layer includes clients that create events, and that read and process these events.
 - These clients include the streaming database ksqlDB, applications that use the Kafka - - - Streams client library, and Kafka connectors
 
+
 ## Events
 
-![img](./docs/event.png)
+![img](./img/event.png)
 
 A topic is a container that typically group events of same type together, like a DB table, order, clicks, impressions, etc. During write, specify which topic. During read, subscribe based on topic for filtering on consumption. Topic can be configured independently, e.g. how long to retain. Kafka topics are named containers of a sequence of related events, e.g., “customer orders”, “customer account deposits”, “customer account balance updates”, and so on … Topic defines a logical queue. Consumption at topic level.
 
@@ -35,9 +36,44 @@ The simple semantics make it feasible for Kafka to deliver high levels of sustai
 Since Kafka topics are logs, there is nothing inherently temporary about the data in them. Every topic can be configured to expire data after it has reached a certain age (or the topic overall has reached a certain size), from as short as seconds to as long as years or even to retain events indefinitely. The logs that underlie Kafka topics are files stored on disk. When you write an event to a topic, it is as durable as it would be if you had written it to any database you ever trusted.
 
 
+## Record Schema
+
+![img](./img/record-schema.png)
+
+Both key/value are byte arrays. Applications have the flexibility of how to encode the data.
+
+When the record key or value are serialized with a Confluent Schema Registry compatible serializer, the first byte of the serialized data is the magic byte which identifies the the serialization format version. Integrating with Confluent Schema Registry allows data to be encoded with JSON or Avro.
+
+The next four bytes contain the schema ID under which the schema was registered in the Schema Registry.
+
+The consumer client requests the schema from the Schema Registry using this schema ID and then deserializes the key or value using that schema.
+
+
+## Topic 
+
+![img](./img/kafka-topic.png)
+
+A topic is a container that typically group events of same type together, like a DB table, order, clicks, impressions, etc. During write, specify which topic. During read, subscribe based on topic for filtering on consumption. Topic can be configured independently, e.g. how long to retain. Kafka topics are named containers of a sequence of related events, e.g., “customer orders”, “customer account deposits”, “customer account balance updates”, and so on … Topic defines a logical queue. Consumption at topic level.
+
+The topic is Kafka’s most fundamental unit of organization. As a developer using Kafka, the topic is the abstraction you probably think the most about.
+
+- Kafka clusters typically contain many topics.
+- Consumers generally subscribe at the topic level
+- Topics take the form of a log and as such are easy to understand, because they are simple data structures with well-known semantics.
+- A topic is append only: When you write a new event into a topic, it always goes on the end.
+- Second, a topic can only be read by seeking an arbitrary offset, then by scanning sequential entries.
+- Third, events in the topic are immutable—once something has happened, it is exceedingly difficult to make it un-happen.
+
+The simple semantics make it feasible for Kafka to deliver high levels of sustained throughput in and out of topics, and also make it easier to reason about the replication of topics. Kafka topics are also fundamentally durable things. Traditional enterprise messaging systems have topics and queues, which store events temporarily to buffer them between source and destination. 
+
+Since Kafka topics are logs, there is nothing inherently temporary about the data in them. Every topic can be configured to expire data after it has reached a certain age (or the topic overall has reached a certain size), from as short as seconds to as long as years or even to retain events indefinitely. The logs that underlie Kafka topics are files stored on disk. When you write an event to a topic, it is as durable as it would be if you had written it to any database you ever trusted.
+
+
+
+
 ## Topic Partitions
 
-![img](./docs/topic-partitions.png)
+![img](./img/topic-partitions.png)
 
 Since Kafka runs as a distributed system, we need a way to distribute the data in a topic to the cluster. Partition is the unit of distribution. Each partition’s data is stored on a single broker. There are typically many partitions for load balancing. Partition is also the unit and parallelism for better scalability. A partition’s storage is typically bounded by a capacity of a single broker.
 
@@ -48,7 +84,7 @@ Partitioning takes the single topic and breaks it into multiple topic partitions
 
 ## Partition Offsets
 
-![img](./docs/partition-offsets.png)
+![img](./img/partition-offsets.png)
 
 Each event in a partition has a unique identifier, called offset. It’s monotonically increasing and never reused. Consumer typically asks for new events from an offset. Events delivered to consumer in offset order. Offsets are logical id of records. When events are written to a partition, they are assigned an offset identifying the logical position within the partition.
 
@@ -67,7 +103,7 @@ Every component of the Kafka platform that is not a Kafka broker is at bottom ei
 
 ### Producers
 
-![img](./docs/producer.png)
+![img](./img/producer.png)
 
 Let's zero in on producers first. Now, the API surface of the producer library is fairly lightweight. In Java, which is the native language of Apache Kafka, there's a class called KafkaProducer that you use to connect to the cluster.
 
@@ -75,7 +111,7 @@ Producers publish data to the topics of their choice. The producer is responsibl
 
 ### Consumers
 
-![img](./docs/consumer.png)
+![img](./img/consumer.png)
 
 Consumers label themselves with a consumer group name, and each record published to a topic is delivered to one consumer instance within each subscribing consumer group. Consumer instances can be in separate processes or on separate machines.
 
@@ -83,7 +119,7 @@ If all the consumer instances have the same consumer group, then the records wil
 
 If all the consumer instances have different consumer groups, then each record will be broadcast to all the consumer processes.
 
-![img](./docs/consumer-groups.png)
+![img](./img/consumer-groups.png)
 
 A two-server Kafka cluster hosting four partitions (P0-P3) with two consumer groups. Consumer group A has two consumer instances and group B has four.
 
@@ -96,7 +132,7 @@ Kafka only provides a total order over records within a partition, not between d
 
 ## Kafka Connect
 
-![img](./docs/kafka-connect.png)
+![img](./img/kafka-connect.png)
 
 Now it is a fact in the world of information storage and retrieval that some systems are not Kafka. Some say that's an unfortunate fact, but we all agree at minimum that it is true. And sometimes you'd like the data that are in those other systems to get into Kafka topics. And sometimes you'd like the data in Kafka topics to get into those systems. This is the job of Kafka Connect. Kafka is integration API, and really subs system.
 
