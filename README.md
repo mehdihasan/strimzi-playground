@@ -48,16 +48,16 @@
    make
    ```
 8. [Optional] Build docker images for the producer, consumer and other utility applications
-9.  deploy the helm chart
-   ```bash
-   cd helm-charts
-   make
-   ```
-11. In case if you got lots of Evicted pods:
+9. Deploy the helm chart
+    ```bash
+    cd helm-charts
+    make
+    ```
+10. In case if you got lots of Evicted pods:
     ```bash
     kubectl get pod -n kafka | grep Evicted | awk '{print $1}' | xargs kubectl delete pod -n kafka
     ```
-12. When you are finished, you can uninstall the entire deployment with the following:
-   ```bash
-   helm uninstall demo-kafka -n kafka
-   ```
+11. When you are finished, you can uninstall the entire deployment with the following:
+    ```bash
+    helm uninstall demo-kafka -n kafka
+    ```
