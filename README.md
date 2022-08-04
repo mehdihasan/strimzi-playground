@@ -20,7 +20,18 @@
    ```bash
    kubectl create -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/master/bundle.yaml -n kafka
    ```
-5. [Optional] build the kafka connect docker image. If you don't build - it will pull the mentioned Kafka Connect version.
+5. install ingress controller
+   ```bash
+   kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.3.0/deploy/static/provider/cloud/deploy.yaml
+   ```
+6. Add the following to the end of your `/etc/hosts` file
+   ```bash
+   sudo nano /etc/hosts
+   ```
+   ```txt
+   127.0.0.1     strimzi.bridge.local
+   ```
+7. [Optional] build the kafka connect docker image. If you don't build - it will pull the mentioned Kafka Connect version.
    ```bash
    cd apps/kafka-plugins/connectors/weatherapi-connector
    make
@@ -30,13 +41,17 @@
    ```bash
    make
    ```
-6. [Optional] Build docker images for the producer, consumer and other utility applications
-7. deploy the helm chart
+8. [Optional] Build docker images for the producer, consumer and other utility applications
+9.  deploy the helm chart
    ```bash
    cd helm-charts
    make
    ```
-8. When you are finished, you can uninstall the entire deployment with the following:
+11. In case if you got lots of Evicted pods:
+    ```bash
+    kubectl get pod -n kafka | grep Evicted | awk '{print $1}' | xargs kubectl delete pod -n kafka
+    ```
+12. When you are finished, you can uninstall the entire deployment with the following:
    ```bash
    helm uninstall demo-kafka -n kafka
    ```

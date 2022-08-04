@@ -1,0 +1,9 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaBridge
+metadata:
+  name: {{ .Values.name }}
+spec:
+  bootstrapServers: {{ .Values.global.kafkaClusterName }}-kafka-bootstrap:9092
+  http:
+    port: 8080
+  replicas: {{ .Values.replicas }}
