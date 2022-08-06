@@ -1,9 +1,14 @@
 # Strimzi Playground
 
+![architecture-diagram](architecture.svg)
 
 ## Knowledge
 1. [What is Kafka?](./docs/KAFKA.md)
-2. [What is Strimzi?](https://strimzi.io/)
+2. [Kafka Flavors](./docs/FLAVORS.md)
+3. [What is Strimzi?](https://strimzi.io/)
+4. [Key configurations for Kafka, Connect and Zookeeper](./docs/KEY-CONFIGS.md)
+5. [Monitoring and Alerting](./docs/MONITORING-ALERTING.md)
+6. [How Kafka Works](./docs/HOW-KAFKA-WORKS.md)
 
 
 ## Deployent Steps:
