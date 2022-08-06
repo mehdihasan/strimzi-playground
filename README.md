@@ -9,6 +9,7 @@
 4. [Key configurations for Kafka, Connect and Zookeeper](./docs/KEY-CONFIGS.md)
 5. [Monitoring and Alerting](./docs/MONITORING-ALERTING.md)
 6. [How Kafka Works](./docs/HOW-KAFKA-WORKS.md)
+7. [Design Patterns](./docs/DESIGN-PATTERNS.md)
 
 
 ## Deployent Steps:
