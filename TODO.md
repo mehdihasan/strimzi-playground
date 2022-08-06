@@ -18,4 +18,4 @@
 - [V] Kafka Connect build and deployment
 - [V] Kafka Connect plugins build and deployment
 - [V] Kafka REST Proxy (Kafka Bridge): Basic Implementation
-- [V] Kafka REST Proxy (Kafka Bridge): Authentication with nginx reverse proxy 
+- [V] Kafka REST Proxy (Kafka Bridge): Authentication with nginx reverse proxy (username:password)(foo:bar)
