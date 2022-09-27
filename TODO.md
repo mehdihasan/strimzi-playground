@@ -1,7 +1,8 @@
+- Start new way of Kafka Connect build
 - Multi-Cluster MirroeMaker2
+- use KafkaConnector resource
 - Kafka Streams App: JSON Validation
 - Kafka Streams App: Publish custom headers with messages
-- Implementation of Kafka REST Proxy (Kafka Bridge)
 - Run Bash Scripted Cron Job to publish messages into Kafka REST Proxy (Kafka Bridge)
 - why does the strimzi operator pod is getting crshahed ?
   - could be resoure issue, as no errors
@@ -13,3 +14,8 @@
 - [V] running the streams app
 - [V] running the grafana and promethoues
 - [V] running the connectors ?
+- [V] Kafka deployment
+- [V] Kafka Connect build and deployment
+- [V] Kafka Connect plugins build and deployment
+- [V] Kafka REST Proxy (Kafka Bridge): Basic Implementation
+- [V] Kafka REST Proxy (Kafka Bridge): Authentication with nginx reverse proxy (username:password)(foo:bar)

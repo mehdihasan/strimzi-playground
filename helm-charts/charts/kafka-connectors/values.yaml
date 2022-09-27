@@ -10,6 +10,7 @@ connectors:
       value.converter: org.apache.kafka.connect.storage.StringConverter
       key.converter: org.apache.kafka.connect.storage.StringConverter
       is.struct: false
+      min.insync.replicas: 1
 
   - name: weather_source_connector_v1
     class: com.custom.kafka.connect.WeatherAPIConnector
@@ -19,6 +20,7 @@ connectors:
       cities: Berlin,Rome,Prague,Vienna,Budapest
       kafka.topic: weather-data-v1
       is.struct: false
+      min.insync.replicas: 1
 
   - name: weather_source_connector_v2
     class: com.custom.kafka.connect.WeatherAPIConnector
@@ -27,4 +29,5 @@ connectors:
       open.weather.api.key: 8210a492417fb274440f643f9fb1ff6b
       cities: Delhi,Osaka,Dhaka,Shanghai,Singapore
       kafka.topic: weather-data-v2
-      is.struct: true      
+      is.struct: true
+      min.insync.replicas: 1    

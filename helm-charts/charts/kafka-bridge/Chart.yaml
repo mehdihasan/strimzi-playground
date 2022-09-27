@@ -1,0 +1,19 @@
+# A YAML file containing information about the chart
+
+apiVersion: v2
+name: kafka-bridge
+version: 2.0.0
+description: A single-sentence description of this project (optional)
+type: application # or library
+# sources:
+#   - A list of URLs to source code for this project (optional)
+
+dependencies: # A list of the chart requirements (optional)
+  - name: strimzi-kafka
+    version: 2.0.0
+
+# icon: A URL to an SVG or PNG image to be used as an icon (optional).
+appVersion: 2.0.0
+deprecated: false
+# annotations:
+#   example: A list of annotations keyed by name (optional).
