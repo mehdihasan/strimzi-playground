@@ -161,3 +161,4 @@ One of the primary advantages of connect is the gigantic ecosystem of connectors
 
 ## References
 1. [Kafka Fundamentals](https://developer.confluent.io/learn-kafka/architecture/get-started/)
+2. [Intro to Kafka Connect: Core Components and Architecture ft. Robin Moffatt](https://developer.confluent.io/podcast/intro-to-kafka-connect-core-components-and-architecture-ft-robin-moffatt/)
