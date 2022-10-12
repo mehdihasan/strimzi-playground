@@ -2,8 +2,8 @@ PROJECT_NAME=demo-kafka-connect
 DOCKERFILE_DIR     ?= ./
 DOCKER_REGISTRY    ?= docker.io
 DOCKER_ORG         ?= mehdihasan
-DOCKER_TAG         ?= 0.34.0-kafka-3.2.0
-DOCKER_VERSION_ARG ?= 0.34.0-kafka-3.2.0
+DOCKER_TAG         ?= 0.35.0-strimzi-0.31.0-kafka-3.2.3
+DOCKER_VERSION_ARG ?= 0.35.0-strimzi-0.31.0-kafka-3.2.3
 
 all: docker_build docker_push
 
