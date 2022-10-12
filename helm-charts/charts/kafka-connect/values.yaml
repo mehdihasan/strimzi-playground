@@ -11,8 +11,8 @@ additional:
 replicas: 1
 
 jvmMemory:
-  max: 1g
-  min: 1g
+  max: 1500m # 75% of pod memory
+  min: 512m
 
 jvmOptions:
   gcLoggingEnabled: false

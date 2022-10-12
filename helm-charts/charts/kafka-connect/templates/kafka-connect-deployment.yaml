@@ -40,8 +40,8 @@ spec:
   #     secret:
   #       secretName: demo-trust-store
   jvmOptions:
-    # "-Xmx": "{{ .Values.jvmMemory.max }}"
-    # "-Xms": "{{ .Values.jvmMemory.min }}"
+    "-Xmx": "{{ .Values.jvmMemory.max }}"
+    "-Xms": "{{ .Values.jvmMemory.min }}"
     "gcLoggingEnabled": {{ .Values.jvmOptions.gcLoggingEnabled }}
   metricsConfig:
     type: jmxPrometheusExporter
