@@ -1,6 +1,6 @@
+- Streams processor Kafka 3.3.1 version issue fix
 - Start new way of Kafka Connect build
 - Multi-Cluster MirroeMaker2
-- use KafkaConnector resource
 - Kafka Streams App: JSON Validation
 - Kafka Streams App: Publish custom headers with messages
 - Run Bash Scripted Cron Job to publish messages into Kafka REST Proxy (Kafka Bridge)
@@ -19,3 +19,4 @@
 - [V] Kafka Connect plugins build and deployment
 - [V] Kafka REST Proxy (Kafka Bridge): Basic Implementation
 - [V] Kafka REST Proxy (Kafka Bridge): Authentication with nginx reverse proxy (username:password)(foo:bar)
+- [V] use KafkaConnector resource
