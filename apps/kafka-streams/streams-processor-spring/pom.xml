@@ -10,12 +10,12 @@
 	</parent>
 	<groupId>com.demo.kafka</groupId>
 	<artifactId>streams-processor-spring</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>0.33.1-SNAPSHOT</version>
 	<name>streams-processor-spring</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
-		<testcontainers-kafka.version>1.17.2</testcontainers-kafka.version>
+		<testcontainers-kafka.version>1.17.6</testcontainers-kafka.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -25,12 +25,12 @@
 		<dependency>
 			<groupId>org.springframework.kafka</groupId>
 			<artifactId>spring-kafka</artifactId>
-			<version>2.8.5</version>
+			<version>2.9.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.kafka</groupId>
 			<artifactId>kafka-streams</artifactId>
-			<version>3.1.0</version>
+			<version>3.3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.kafka</groupId>
