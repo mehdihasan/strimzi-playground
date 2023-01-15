@@ -2,10 +2,21 @@ PROJECT_NAME=demo-kafka-connect
 DOCKERFILE_DIR     ?= ./
 DOCKER_REGISTRY    ?= docker.io
 DOCKER_ORG         ?= mehdihasan
-DOCKER_TAG         ?= 0.32.0-strimzi-0.32.0-kafka-3.3.1
-DOCKER_VERSION_ARG ?= 0.32.0-strimzi-0.32.0-kafka-3.3.1
+DOCKER_TAG         ?= 0.32.1-strimzi-0.32.0-kafka-3.3.1
+DOCKER_VERSION_ARG ?= 0.32.1-strimzi-0.32.0-kafka-3.3.1
 
-all: docker_build docker_push
+all: make_plugin_dir build_connectors docker_build docker_push
+
+make_plugin_dir:
+	rm -rf my-plugins
+	mkdir my-plugins
+
+build_connectors:
+	echo "building new weatherapi-connector"
+	mvn -f ../apps/kafka-plugins/connectors/weatherapi-connector/pom.xml clean package
+	echo "place the weatherapi-connector in the connect plugin folder"
+	cp ../apps/kafka-plugins/connectors/weatherapi-connector/target/*-jar-with-dependencies.jar my-plugins/
+	echo "done with connector build"
 
 docker_build:
 	echo "Building Docker image ..."
