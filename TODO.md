@@ -11,6 +11,8 @@
 - running the consumer app
 - Develop and deploy Kafka Single Message Transform (SMT) into Connect
 - Develop and deploy Converter into Connect
+- [ ] [ETL testing — How to test your data pipelines the right way](https://towardsdatascience.com/forget-about-the-new-data-trends-in-2023-d2756add3317)
+- [ ] [How to add tests to your data pipelines](https://www.startdataengineering.com/post/how-to-add-tests-to-your-data-pipeline/)
 - [V] running the streams app
 - [V] running the grafana and promethoues
 - [V] running the connectors ?
