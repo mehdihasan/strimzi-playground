@@ -1,0 +1,34 @@
+---
+version: '3.9'
+
+services:
+
+  postgres:
+    image: postgres
+    restart: always
+    hostname: postgres
+    container_name: postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_HOST_NAME=postgres
+      - POSTGRES_PASSWORD=example
+
+
+  avro-schema-registry:
+    image: salsify/avro-schema-registry:0.14.0
+    hostname: avro-schema-registry
+    container_name: avro-schema-registry
+    depends_on:
+      - postgres
+    ports:
+      - "8081:5000"
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: avro-schema-registry
+      DATABASE_URL: postgresql://postgres:example@postgres/new-avro-schema-registry
+      FORCE_SSL: 'false'
+      DISABLE_PASSWORD: 'true'
+      SECRET_KEY_BASE: supersecret
+      SCHEMA_REGISTRY_PASSWORD: avro
+    #command: sh -c "exec rails db:setup"
