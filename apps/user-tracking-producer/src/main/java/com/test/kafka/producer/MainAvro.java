@@ -14,7 +14,7 @@ import java.util.Properties;
 import static java.lang.Thread.sleep;
 
 @Slf4j
-public class Main {
+public class MainAvro {
 
     public static void main(String[] args) throws InterruptedException {
 
@@ -35,7 +35,7 @@ public class Main {
             Event event = eventGenerator.generateEvent();
             User key = extractUserKey(event);
             Product value = extractProductValue(event);
-            ProducerRecord<User, Product> producerRecord = new ProducerRecord<>("cps-test-sink-kafka-topic-complete-test", key, value);
+            ProducerRecord<User, Product> producerRecord = new ProducerRecord<>("user-prefer-product-in-avro", key, value);
 
             log.info("Producing to Kafka the record: " + key + ":" + value);
             producer.send(producerRecord);
