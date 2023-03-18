@@ -5,6 +5,7 @@ import com.test.kafka.producer.model.Event;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
 import java.time.ZoneId;
@@ -24,8 +25,10 @@ public class MainString {
         props.put("bootstrap.servers", "localhost:9092");
 
         // String SERIALIZER
-        props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG
+                , "org.apache.kafka.common.serialization.StringSerializer");
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG
+                , "org.apache.kafka.common.serialization.StringSerializer");
         Producer<String, String> producer = new KafkaProducer<>(props);
 
         for (int i = 1; i <= 10; i++) {
@@ -34,7 +37,10 @@ public class MainString {
             Event event = eventGenerator.generateEvent();
             User key = extractUserKey(event);
             Product value = extractProductValue(event);
-            ProducerRecord<String, String> producerRecord = new ProducerRecord<>("user-prefer-product-in-string", key.toString(), value.toString());
+            ProducerRecord<String, String> producerRecord = new
+                    ProducerRecord<>("user-prefer-product-in-string"
+                    , key.toString()
+                    , value.toString());
 
             log.info("Producing to Kafka the record: " + key + ":" + value);
             producer.send(producerRecord);
@@ -49,7 +55,10 @@ public class MainString {
         return User.newBuilder()
                 .setUserId(event.getInternalUser().getUserId().toString())
                 .setUsername(event.getInternalUser().getUsername())
-                .setDateOfBirth((int)event.getInternalUser().getDateOfBirth().toInstant().atZone(ZoneId.systemDefault()).getLong(ChronoField.EPOCH_DAY))
+                .setDateOfBirth((int)event
+                        .getInternalUser()
+                        .getDateOfBirth().toInstant().atZone(ZoneId.systemDefault())
+                        .getLong(ChronoField.EPOCH_DAY))
                 .build();
     }
 

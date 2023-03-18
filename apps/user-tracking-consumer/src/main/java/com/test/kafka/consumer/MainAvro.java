@@ -14,10 +14,8 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Properties;
 
-import static java.util.Arrays.asList;
-
 @Slf4j
-public class Main {
+public class MainAvro {
 
     public static void main(String[] args) {
 
@@ -25,10 +23,10 @@ public class Main {
 
         Properties props = new Properties();
         // props.put("bootstrap.servers", "localhost:9092,localhost:9093");
-        props.put("bootstrap.servers", "localhost:9092");
-        props.put("group.id", "user-tracking-consumer-v3");
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, "user-tracking-consumer-v3");
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, KafkaAvroDeserializer.class.getName());
-        props.put("value.deserializer", KafkaAvroDeserializer.class.getName());
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, KafkaAvroDeserializer.class.getName());
         props.put("specific.avro.reader", "true");
         props.put("schema.registry.url", "http://localhost:8081");
 
