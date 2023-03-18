@@ -16,6 +16,10 @@ KAFKA_CLUSTER_ID="$(./bin/kafka-storage.sh random-uuid)"
 
 ```bash
 docker compose -f ./docker-compose-sr.yaml up -d
+
+# To setup the database the first time you run the app, need to call rails db:setup from within the container
+
+docker exec avro-schema-registry bundle exec rails db:setup
 ```
 
 ## Run Kafdrop
