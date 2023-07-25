@@ -3,8 +3,8 @@ PROJECT_NAME=streams-processor
 DOCKERFILE_DIR     ?= ./
 DOCKER_REGISTRY    ?= docker.io
 DOCKER_ORG         ?= mehdihasan
-DOCKER_TAG         ?= 0.2
-DOCKER_VERSION_ARG ?= 0.2
+DOCKER_TAG         ?= 0.3
+DOCKER_VERSION_ARG ?= 0.3
 
 all: docker_build docker_push
 

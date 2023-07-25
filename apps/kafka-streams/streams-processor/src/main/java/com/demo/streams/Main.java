@@ -82,7 +82,8 @@ public class Main {
         final KafkaStreams streams = new KafkaStreams(topology, props);
         final CountDownLatch latch = new CountDownLatch(1);
 
-        Runtime.getRuntime().addShutdownHook(new Thread("kafka-streams-shutdown-hook") {
+        Runtime.getRuntime().addShutdownHook(
+                new Thread("kafka-streams-shutdown-hook") {
             @Override
             public void run() {
                 streams.close();

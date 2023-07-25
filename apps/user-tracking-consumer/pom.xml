@@ -9,10 +9,10 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <avro.version>1.11.0</avro.version>
+        <avro.version>1.11.2</avro.version>
         <slf4j.version>2.0.7</slf4j.version>
-        <confluent.version>7.1.1</confluent.version>
-        <kafka.version>3.4.0</kafka.version>
+        <confluent.version>7.4.1</confluent.version>
+        <kafka.version>3.5.0</kafka.version>
     </properties>
 
     <build>
@@ -21,8 +21,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>17</source>
-                    <target>17</target>
+                    <source>11</source>
+                    <target>11</target>
                 </configuration>
             </plugin>
 

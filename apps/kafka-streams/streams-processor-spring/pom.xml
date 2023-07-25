@@ -5,17 +5,17 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.0</version>
+		<version>3.1.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.demo.kafka</groupId>
 	<artifactId>streams-processor-spring</artifactId>
-	<version>0.33.1-SNAPSHOT</version>
+	<version>3.5.0-SNAPSHOT</version>
 	<name>streams-processor-spring</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<java.version>11</java.version>
-		<testcontainers-kafka.version>1.17.6</testcontainers-kafka.version>
+		<java.version>17</java.version>
+		<testcontainers-kafka.version>1.18.3</testcontainers-kafka.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -25,12 +25,12 @@
 		<dependency>
 			<groupId>org.springframework.kafka</groupId>
 			<artifactId>spring-kafka</artifactId>
-			<version>2.9.0</version>
+			<version>3.0.9</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.kafka</groupId>
 			<artifactId>kafka-streams</artifactId>
-			<version>3.3.1</version>
+			<version>3.5.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.kafka</groupId>

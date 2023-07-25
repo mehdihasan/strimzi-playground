@@ -1,10 +1,9 @@
 # The default configuration values for this chart
 global:
   kafkaClusterName: kafka-cluster-1
-  kafkaVersion: 3.3.1
+  kafkaVersion: 3.5.0
   environment: kafka
   kafkaConnectClusterName: kafka-connect-1
   maxSize: 15728640
   hasRes: false
   hasProbes: false
-

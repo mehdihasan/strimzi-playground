@@ -7,6 +7,6 @@ RUN mvn clean package
 
 FROM openjdk:11 AS deploy
 WORKDIR /app
-COPY --from=build /usr/src/app/target/streams-processor-avro-0.1-jar-with-dependencies.jar .
+COPY --from=build /usr/src/app/target/streams-processor-avro-0.2-jar-with-dependencies.jar .
 EXPOSE 8095
-ENTRYPOINT ["java","-jar","/app/soim-streams-processor-0.1-jar-with-dependencies.jar"]
+ENTRYPOINT ["java","-jar","/app/soim-streams-processor-0.2-jar-with-dependencies.jar"]
