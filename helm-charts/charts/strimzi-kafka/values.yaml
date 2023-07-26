@@ -4,10 +4,10 @@ kafka:
     offsetsTopicReplicationFactor: 1 #3
     transactionStateLogReplicationFactor: 1 #3
     transactionStateLogMinIsr: 1 #2
-    logMessageFormatVersion: "3.3"
-    interBrokerProtocolVersion: "3.3"
+    logMessageFormatVersion: "3.5"
+    interBrokerProtocolVersion: "3.5"
     logCleanupPolicy: compact
-  
+
   storage:
     type: ephemeral
     size: 10Gi

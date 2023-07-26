@@ -1,11 +1,11 @@
-FROM maven:3.6.0-jdk-11 AS build
+FROM maven:3.8.3-openjdk-17 AS build
 WORKDIR /usr/src/app
 COPY src ./src
 COPY pom.xml .
 RUN mvn clean package
 
 
-FROM openjdk:11 AS deploy
+FROM openjdk:17-alpine AS deploy
 WORKDIR /app
 COPY --from=build /usr/src/app/target/streams-processor-0.3-jar-with-dependencies.jar .
 EXPOSE 8095

@@ -1,4 +1,3 @@
-CONNECT_PLUGIN_PATH=../../../../build-connect/
 CONNECT_PLUGIN_PATH=../../../../build-connect/my-plugins
 FILE_TO_REMOVE=/weatherapi-connector-*
 FILE_TO_ADD=target/*-jar-with-dependencies.jar
