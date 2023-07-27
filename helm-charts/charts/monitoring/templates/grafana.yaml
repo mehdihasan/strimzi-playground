@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: grafana
-        image: grafana/grafana:7.3.7
+        image: grafana/grafana:latest
         ports:
         - name: grafana
           containerPort: 3000
@@ -29,6 +29,12 @@ spec:
           mountPath: /var/lib/grafana
         - name: grafana-logs
           mountPath: /var/log/grafana
+        - name: grafana-datasources
+          mountPath: /etc/grafana/provisioning/datasources
+          readOnly: false
+        - name: grafana-dashboards
+          mountPath: /etc/grafana/provisioning/dashboards
+          readOnly: false
         readinessProbe:
           httpGet:
             path: /api/health
@@ -46,6 +52,14 @@ spec:
         emptyDir: {}
       - name: grafana-logs
         emptyDir: {}
+      - name: grafana-datasources
+        configMap:
+          defaultMode: 420
+          name: grafana-datasources
+      - name: grafana-dashboards
+        configMap:
+          defaultMode: 420
+          name: grafana-dashboards
 ---
 apiVersion: v1
 kind: Service
@@ -59,6 +73,7 @@ spec:
     port: 3000
     targetPort: 3000
     protocol: TCP
+    nodePort: 31999
   selector:
     name: grafana
   type: NodePort
