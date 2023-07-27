@@ -5,21 +5,21 @@ topics:
     retentionMs: 604800000
     maxMessageBytes: "5000000"
     replicas: 1
-    partitions: 5
+    partitions: 3
 
   - name: weather-data-v1
     cleanupPolicy: delete
     retentionMs: 604800000
     maxMessageBytes: "5000000"
-    replicas: 1
-    partitions: 5
+    replicas: 2
+    partitions: 3
 
   - name: weather-data-v2
     cleanupPolicy: delete
     retentionMs: 604800000
     maxMessageBytes: "5000000"
-    replicas: 1
-    partitions: 5
+    replicas: 3
+    partitions: 3
 
   - name: weather-data-lund-v0
     cleanupPolicy: delete

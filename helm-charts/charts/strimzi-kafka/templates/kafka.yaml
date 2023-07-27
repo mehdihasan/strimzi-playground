@@ -74,10 +74,10 @@ spec:
     {{ if .Values.global.hasProbes }}
     readinessProbe:
       initialDelaySeconds: 500
-      timeoutSeconds: 5
+      timeoutSeconds: 15
     livenessProbe:
       initialDelaySeconds: 500
-      timeoutSeconds: 5
+      timeoutSeconds: 15
     {{ end }}
     config:
       tcpKeepAlive: true

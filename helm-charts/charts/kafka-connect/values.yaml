@@ -1,5 +1,5 @@
 config:
-  connectTopicReplicas: -1
+  connectTopicReplicas: -1 # -1 means it will use the default replication factor configured in the broker
   enableKafkaConnectorRes: true
 
 connect:
@@ -8,10 +8,10 @@ connect:
 
 additional:
 
-replicas: 1
+replicas: 3
 
 jvmMemory:
-  max: 1500m # 75% of pod memory
+  max: 1500m # 75% of pod memory is recommended
   min: 512m
 
 jvmOptions:

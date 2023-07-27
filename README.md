@@ -6,6 +6,7 @@
   - [Deployent Steps](#deployent-steps)
     - [What are places that you should mention the Strimzi/Kafka versions?](#what-are-places-that-you-should-mention-the-strimzikafka-versions)
     - [Todo](#todo)
+    - [Interaction](#interaction)
 
 ## Knowledge
 
@@ -104,3 +105,10 @@
     ```bash
     helm uninstall demo-kafka -n kafka
     ```
+
+### Interaction
+
+kubectl -n kafka port-forward service/prometheus 31090:9090
+kubectl -n kafka port-forward service/grafana 31999:3000
+kubectl -n kafka port-forward service/kafka-connect-1-connect-api 38083:8083
+kubectl -n kafka port-forward service/demo-kafka-kafdrop 30900:9000

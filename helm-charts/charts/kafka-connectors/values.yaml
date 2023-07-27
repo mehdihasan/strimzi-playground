@@ -20,7 +20,7 @@ connectors:
       cities: Berlin,Rome,Prague,Vienna,Budapest
       kafka.topic: weather-data-v1
       is.struct: false
-      min.insync.replicas: 1
+      min.insync.replicas: 2
 
   - name: weather_source_connector_v2
     class: com.custom.kafka.connect.WeatherAPIConnector
@@ -30,4 +30,4 @@ connectors:
       cities: Delhi,Osaka,Dhaka,Shanghai,Singapore
       kafka.topic: weather-data-v2
       is.struct: true
-      min.insync.replicas: 1    
+      min.insync.replicas: 3

@@ -1,8 +1,8 @@
 kafka:
-  replicas: 1 #3
+  replicas: 3 #1
   config:
-    offsetsTopicReplicationFactor: 1 #3
-    transactionStateLogReplicationFactor: 1 #3
+    offsetsTopicReplicationFactor: 3 #1
+    transactionStateLogReplicationFactor: 3 #1
     transactionStateLogMinIsr: 1 #2
     logMessageFormatVersion: "3.5"
     interBrokerProtocolVersion: "3.5"

@@ -7,3 +7,4 @@ spec:
   http:
     port: 8080
   replicas: {{ .Values.replicas }}
+  enableMetrics: true
