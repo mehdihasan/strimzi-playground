@@ -1,3 +1,4 @@
+CONNECT_PATH=../../../../build-connect
 CONNECT_PLUGIN_PATH=../../../../build-connect/my-plugins
 FILE_TO_REMOVE=/weatherapi-connector-*
 FILE_TO_ADD=target/*-jar-with-dependencies.jar
@@ -5,7 +6,7 @@ FILE_TO_ADD=target/*-jar-with-dependencies.jar
 all: make_directory delete_old_jar maven_build place_jar
 
 make_directory:
-	makdir CONNECT_PLUGIN_PATH
+	cd $(CONNECT_PATH) && mkdir my-plugins
 
 delete_old_jar:
 	echo "removing old weatherapi-connector"

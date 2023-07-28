@@ -5,7 +5,7 @@ DOCKER_ORG         ?= mehdihasan
 DOCKER_TAG         ?= 0.36.0-strimzi-0.36.0-kafka-3.5.0
 DOCKER_VERSION_ARG ?= 0.36.0-strimzi-0.36.0-kafka-3.5.0
 
-all: make_plugin_dir build_connectors docker_build docker_push
+all: make_plugin_dir build_connectors docker_build docker_tag docker_push delete_plugin_dir
 
 make_plugin_dir:
 	rm -rf my-plugins
@@ -26,6 +26,9 @@ docker_tag:
 	echo "Tagging $(DOCKER_ORG)/$(PROJECT_NAME):$(DOCKER_TAG) to $(DOCKER_REGISTRY)/$(DOCKER_ORG)/$(PROJECT_NAME):$(DOCKER_TAG) ..."
 	docker tag $(DOCKER_ORG)/$(PROJECT_NAME):$(DOCKER_TAG) $(DOCKER_REGISTRY)/$(DOCKER_ORG)/$(PROJECT_NAME):$(DOCKER_TAG)
 
-docker_push: docker_tag
+docker_push:
 	echo "Pushing $(DOCKER_REGISTRY)/$(DOCKER_ORG)/$(PROJECT_NAME):$(DOCKER_TAG) ..."
-	docker push $(DOCKER_REGISTRY)/$(DOCKER_ORG)/$(PROJECT_NAME):$(DOCKER_TAG)
+	docker push $(DOCKER_REGISTRY)/$(DOCKER_ORG)/$(PROJECT_NAME):$(DOCKER_TAG) || true
+
+delete_plugin_dir:
+	rm -rf my-plugins
