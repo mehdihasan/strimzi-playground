@@ -1,6 +1,6 @@
-all: pre-req k8s_setup kafka_env_setup build_kafka_connect_image deploy_project
+all: pre_req k8s_setup kafka_env_setup build_kafka_connect_image deploy_project
 
-pre-req:
+pre_req:
 	docker --version
 	kind --version
 
@@ -16,7 +16,7 @@ kafka_env_setup:
 # 	kubectl create -f 'https://strimzi.io/install/latest?namespace=kafka' -n kafka
 	kubectl -n kafka create -f ./CRDs/strimzi-cluster-operator-0.36.0.yaml
 	kubectl -n kafka delete -f ./CRDs/prometheus-operator-deployment-0.11.1.yaml || true
-# 	kubectl create -f 'https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/master/bundle.yaml'	
+# 	kubectl create -f 'https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/master/bundle.yaml'
 	kubectl -n kafka create -f ./CRDs/prometheus-operator-deployment-0.11.1.yaml
 
 build_kafka_connect_image:
