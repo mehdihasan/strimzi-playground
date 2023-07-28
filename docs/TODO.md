@@ -1,14 +1,11 @@
-- Streams processor Kafka 3.3.1 version issue fix
 - Start new way of Kafka Connect build
 - Multi-Cluster MirroeMaker2
 - Kafka Streams App: JSON Validation
 - Kafka Streams App: Publish custom headers with messages
 - Run Bash Scripted Cron Job to publish messages into Kafka REST Proxy (Kafka Bridge)
-- why does the strimzi operator pod is getting crshahed ?
-  - could be resoure issue, as no errors
 - Test code for the connector
-- running the produder app
-- running the consumer app
+- Running the produder app
+- Running the consumer app
 - Develop and deploy Kafka Single Message Transform (SMT) into Connect
 - Develop and deploy Converter into Connect
 - [ ] [ETL testing — How to test your data pipelines the right way](https://towardsdatascience.com/forget-about-the-new-data-trends-in-2023-d2756add3317)
@@ -22,3 +19,6 @@
 - [V] Kafka REST Proxy (Kafka Bridge): Basic Implementation
 - [V] Kafka REST Proxy (Kafka Bridge): Authentication with nginx reverse proxy (username:password)(foo:bar)
 - [V] use KafkaConnector resource
+- [V] Streams processor Kafka 3.3.1 version issue fix
+- [V] Why does the strimzi operator pod is getting crshahed ?
+  - could be resoure issue, as no errors

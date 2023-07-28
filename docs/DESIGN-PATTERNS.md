@@ -1,4 +1,10 @@
-# Design Patterns
+# Design Patterns & Use cases
+
+## Design Patterns
+
+## Use cases
+
+![img](./img/kafka-use-cases.gif)
 
 ## References
 
