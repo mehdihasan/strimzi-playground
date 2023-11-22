@@ -19,7 +19,7 @@ jvmOptions:
 
 image:
   name: mehdihasan/demo-kafka-connect
-  tag: "0.36.0-strimzi-0.36.0-kafka-3.5.0"
+  tag: "0.38.0-strimzi-0.38.0-kafka-3.6.0"
 
 resources:
   limits:

@@ -4,7 +4,7 @@ processors:
     replicas: 1
     image:
       repository: mehdihasan/demo-streams-processor-spring
-      tag: "3.5.0-SNAPSHOT"
+      tag: "3.6.0-SNAPSHOT"
       pullPolicy: Always
     env:
       - name: APP_ID

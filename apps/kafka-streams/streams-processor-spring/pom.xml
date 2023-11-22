@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.demo.kafka</groupId>
 	<artifactId>streams-processor-spring</artifactId>
-	<version>3.5.0-SNAPSHOT</version>
+	<version>3.6.0-SNAPSHOT</version>
 	<name>streams-processor-spring</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -25,12 +25,12 @@
 		<dependency>
 			<groupId>org.springframework.kafka</groupId>
 			<artifactId>spring-kafka</artifactId>
-			<version>3.0.9</version>
+			<version>3.1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.kafka</groupId>
 			<artifactId>kafka-streams</artifactId>
-			<version>3.5.0</version>
+			<version>3.6.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.kafka</groupId>
