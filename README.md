@@ -86,3 +86,4 @@ Places that you should mention the Strimzi/Kafka versions:
 5. [Monitoring and Alerting](./docs/MONITORING-ALERTING.md)
 6. [How Kafka Works](./docs/HOW-KAFKA-WORKS.md)
 7. [Design Patterns and Use cases](./docs/DESIGN-PATTERNS.md)
+8. [Unlocking Kafka's Potential: Tackling Tail Latency with eBPF](https://blog.allegro.tech/2024/03/kafka-performance-analysis.html)
