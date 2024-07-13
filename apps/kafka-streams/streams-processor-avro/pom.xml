@@ -16,7 +16,7 @@
         <slf4j.version>2.0.7</slf4j.version>
         <log4j.version>2.20.0</log4j.version>
         <confluent.version>7.4.1</confluent.version>
-        <avro-maven-plugin.version>1.11.2</avro-maven-plugin.version>
+        <avro-maven-plugin.version>1.11.3</avro-maven-plugin.version>
     </properties>
 
     <repositories>
