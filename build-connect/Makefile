@@ -2,8 +2,8 @@ PROJECT_NAME=demo-kafka-connect
 DOCKERFILE_DIR     ?= ./
 DOCKER_REGISTRY    ?= docker.io
 DOCKER_ORG         ?= mehdihasan
-DOCKER_TAG         ?= 0.38.0-strimzi-0.38.0-kafka-3.6.0
-DOCKER_VERSION_ARG ?= 0.38.0-strimzi-0.38.0-kafka-3.6.0
+DOCKER_TAG         ?= 0.42.0-strimzi-0.42.0-kafka-3.7.1
+DOCKER_VERSION_ARG ?= 0.42.0-strimzi-0.42.0-kafka-3.7.1
 
 all: make_plugin_dir build_connectors docker_build docker_tag docker_push delete_plugin_dir
 

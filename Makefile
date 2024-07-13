@@ -12,12 +12,12 @@ k8s_setup:
 
 kafka_env_setup:
 	kubectl create namespace kafka || true
-	kubectl -n kafka delete -f ./CRDs/strimzi-cluster-operator-0.38.0.yaml || true
+	kubectl -n kafka delete -f ./CRDs/strimzi-cluster-operator-0.42.0.yaml || true
 # 	kubectl create -f 'https://strimzi.io/install/latest?namespace=kafka' -n kafka
-	kubectl -n kafka create -f ./CRDs/strimzi-cluster-operator-0.38.0.yaml
-	kubectl -n kafka delete -f ./CRDs/prometheus-operator-deployment-0.13.0.yaml || true
+	kubectl -n kafka create -f ./CRDs/strimzi-cluster-operator-0.42.0.yaml
+	kubectl -n kafka delete -f ./CRDs/prometheus-operator-deployment-0.15.0.yaml || true
 # 	kubectl create -f 'https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/master/bundle.yaml'
-	kubectl -n kafka create -f ./CRDs/prometheus-operator-deployment-0.13.0.yaml
+	kubectl -n kafka create -f ./CRDs/prometheus-operator-deployment-0.15.0.yaml
 
 build_kafka_connect_image:
 	cd build-connect && $(MAKE)
