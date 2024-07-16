@@ -6,7 +6,13 @@ pre_req:
 
 k8s_setup:
 	kind create cluster --config ./kind/kind-config.yaml || true
-	kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.3.0/deploy/static/provider/cloud/deploy.yaml
+	kubectl delete job ingress-nginx-admission-create -n ingress-nginx || true
+	kubectl delete job ingress-nginx-admission-patch -n ingress-nginx || true
+	kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml --validate=false
+	kubectl wait --namespace ingress-nginx \
+		--for=condition=ready pod \
+		--selector=app.kubernetes.io/component=controller \
+		--timeout=90s
 	kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.5.0/components.yaml
 	kubectl patch deployment metrics-server -n kube-system --patch-file ./kind/metric-server-patch.yaml
 
