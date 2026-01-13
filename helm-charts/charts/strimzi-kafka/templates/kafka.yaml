@@ -1,11 +1,107 @@
-apiVersion: kafka.strimzi.io/v1beta2
+apiVersion: kafka.strimzi.io/v1
+kind: KafkaNodePool
+metadata:
+  name: controller
+  labels:
+    strimzi.io/cluster: {{ .Values.global.kafkaClusterName }}
+spec:
+  replicas: 3
+  roles:
+    - controller
+  {{ if .Values.global.hasProbes }}
+  readinessProbe:
+    initialDelaySeconds: 500
+    timeoutSeconds: 5
+  livenessProbe:
+    initialDelaySeconds: 500
+    timeoutSeconds: 5
+  {{ end }}
+  storage:
+    type: jbod
+    volumes:
+      - id: 0
+        type: {{ .Values.kafka.storage.type }}
+        # do not resize the volumes... this will cause out-of-sync issues
+        {{ if eq .Values.kafka.storage.type "persistent-claim" }}
+        size: {{ .Values.kafka.storage.size }} # do not edit this if the kafka cluster is deployed
+        deleteClaim: {{ .Values.kafka.storage.deleteClaim }}
+        class: {{ .Values.kafka.storage.class }}
+        {{ end }}
+  resources: {{ if .Values.global.hasRes }}
+    limits:
+      cpu: {{ .Values.kafka.resources.limits.cpu }}
+      memory: {{ .Values.kafka.resources.limits.memory }}
+    requests:
+      cpu: {{ .Values.kafka.resources.requests.cpu }}
+      memory: {{ .Values.kafka.resources.requests.memory }}
+    {{ else }} {} {{ end }}
+  {{ if or (eq .Values.global.environment "local") (eq .Values.global.environment "dev") (eq .Values.global.environment "stage") }}
+  {{ else }}
+  {{ end }}
+  metricsConfig:
+    type: jmxPrometheusExporter
+    valueFrom:
+      configMapKeyRef:
+        name: kafka-metrics
+        key: kafka-metrics-config.yml
+---
+
+apiVersion: kafka.strimzi.io/v1
+kind: KafkaNodePool
+metadata:
+  name: broker
+  labels:
+    strimzi.io/cluster: {{ .Values.global.kafkaClusterName }}
+spec:
+  replicas: {{ .Values.kafka.replicas }}
+  roles:
+    - broker
+  {{ if .Values.global.hasProbes }}
+  readinessProbe:
+    initialDelaySeconds: 500
+    timeoutSeconds: 5
+  livenessProbe:
+    initialDelaySeconds: 500
+    timeoutSeconds: 5
+  {{ end }}
+  storage:
+    type: jbod
+    volumes:
+      - id: 0
+        type: {{ .Values.kafka.storage.type }}
+        # do not resize the volumes... this will cause out-of-sync issues
+        {{ if eq .Values.kafka.storage.type "persistent-claim" }}
+        size: {{ .Values.kafka.storage.size }} # do not edit this if the kafka cluster is deployed
+        deleteClaim: {{ .Values.kafka.storage.deleteClaim }}
+        class: {{ .Values.kafka.storage.class }}
+        {{ end }}
+  resources: {{ if .Values.global.hasRes }}
+    limits:
+      cpu: {{ .Values.kafka.resources.limits.cpu }}
+      memory: {{ .Values.kafka.resources.limits.memory }}
+    requests:
+      cpu: {{ .Values.kafka.resources.requests.cpu }}
+      memory: {{ .Values.kafka.resources.requests.memory }}
+    {{ else }} {} {{ end }}
+  {{ if or (eq .Values.global.environment "local") (eq .Values.global.environment "dev") (eq .Values.global.environment "stage") }}
+  {{ else }}
+  {{ end }}
+  metricsConfig:
+    type: jmxPrometheusExporter
+    valueFrom:
+      configMapKeyRef:
+        name: kafka-metrics
+        key: kafka-metrics-config.yml
+
+---
+apiVersion: kafka.strimzi.io/v1
 kind: Kafka
 metadata:
   name: {{ .Values.global.kafkaClusterName }}
 spec:
   kafka:
     version: {{ .Values.global.kafkaVersion }}
-    replicas: {{ .Values.kafka.replicas }}
+    metadataVersion: {{ .Values.global.metadataVersion }}
     listeners:
       - name: external
         port: 9094
@@ -21,14 +117,6 @@ spec:
         port: 9092
         type: internal
         tls: false
-    {{ if .Values.global.hasProbes }}
-    readinessProbe:
-      initialDelaySeconds: 500
-      timeoutSeconds: 5
-    livenessProbe:
-      initialDelaySeconds: 500
-      timeoutSeconds: 5
-    {{ end }}
     config: {{ if .Values.kafka.config.additional }} {{ toYaml .Values.kafka.config.additional | nindent 6 }} {{ end }}
       offsets.topic.replication.factor: {{ .Values.kafka.config.offsetsTopicReplicationFactor }}
       transaction.state.log.replication.factor: {{ .Values.kafka.config.transactionStateLogReplicationFactor }}
@@ -42,73 +130,8 @@ spec:
       max.request.size: {{ .Values.global.maxSize }}
       replica.lag.time.max.ms: 60000
       zookeeper.session.timeout.ms: 30000
-      default.replication.factor: {{ .Values.kafka.config.offsetsTopicReplicationFactor }}
+      default.replication.factor: {{ .Values.kafka.config.defaultReplicationFactor }}
       min.insync.replicas: {{ .Values.kafka.config.transactionStateLogMinIsr }}
-    storage:
-      type: {{ .Values.kafka.storage.type }}
-      # do not resize the volumes... this will cause out-of-sync issues
-      {{ if eq .Values.kafka.storage.type "persistent-claim" }}
-      size: {{ .Values.kafka.storage.size }} # do not edit this if the kafka cluster is deployed
-      deleteClaim: {{ .Values.kafka.storage.deleteClaim }}
-      class: {{ .Values.kafka.storage.class }}
-      {{ end }}
-    resources: {{ if .Values.global.hasRes }}
-      limits:
-        cpu: {{ .Values.kafka.resources.limits.cpu }}
-        memory: {{ .Values.kafka.resources.limits.memory }}
-      requests:
-        cpu: {{ .Values.kafka.resources.requests.cpu }}
-        memory: {{ .Values.kafka.resources.requests.memory }}
-      {{ else }} {} {{ end }}
-    {{ if or (eq .Values.global.environment "local") (eq .Values.global.environment "dev") (eq .Values.global.environment "stage") }}
-    {{ else }}
-    {{ end }}
-    metricsConfig:
-      type: jmxPrometheusExporter
-      valueFrom:
-        configMapKeyRef:
-          name: kafka-metrics
-          key: kafka-metrics-config.yml
-  zookeeper:
-    replicas: {{ .Values.zookeeper.replicas }}
-    {{ if .Values.global.hasProbes }}
-    readinessProbe:
-      initialDelaySeconds: 500
-      timeoutSeconds: 15
-    livenessProbe:
-      initialDelaySeconds: 500
-      timeoutSeconds: 15
-    {{ end }}
-    config:
-      tcpKeepAlive: true
-    storage:
-      type: {{ .Values.zookeeper.storage.type }}
-      # do not resize the volumes... this will cause out-of-sync issues
-      {{ if eq .Values.zookeeper.storage.type "persistent-claim" }}
-      size: {{ .Values.zookeeper.storage.size }} # do not edit this if the kafka cluster is deployed
-      deleteClaim: {{ .Values.zookeeper.storage.deleteClaim }}
-      class: {{ .Values.zookeeper.storage.class }}
-      {{ end }}
-    resources:
-      {{ if .Values.global.hasRes }}
-      limits:
-        cpu: {{ .Values.zookeeper.resources.limits.cpu }}
-        memory: {{ .Values.zookeeper.resources.limits.memory }}
-      requests:
-        cpu: {{ .Values.zookeeper.resources.requests.cpu }}
-        memory: {{ .Values.zookeeper.resources.requests.memory }}
-      {{ else }}
-        {}
-      {{ end }}
-    metricsConfig:
-      type: jmxPrometheusExporter
-      valueFrom:
-        configMapKeyRef:
-          name: kafka-metrics
-          key: zookeeper-metrics-config.yml
-    {{ if or (eq .Values.global.environment "local") (eq .Values.global.environment "dev") (eq .Values.global.environment "stage")}}
-    {{ else }}
-    {{ end }}
   entityOperator:
     topicOperator:
       jvmOptions:
@@ -145,9 +168,9 @@ spec:
     {{ if eq .Values.global.environment "local" }}
     {{ else }}
     tlsSidecar:
-      resources: 
+      resources:
         {{ if .Values.global.hasRes }}
-        requests: 
+        requests:
           cpu: {{ .Values.tlsSidecar.resources.requests.cpu }}
           memory: {{ .Values.tlsSidecar.resources.requests.memory }}
         limits:

@@ -2,10 +2,11 @@ kafka:
   replicas: 3 #1
   config:
     offsetsTopicReplicationFactor: 3 #1
+    defaultReplicationFactor: 3
     transactionStateLogReplicationFactor: 3 #1
     transactionStateLogMinIsr: 1 #2
-    logMessageFormatVersion: "3.7"
-    interBrokerProtocolVersion: "3.7"
+    logMessageFormatVersion: "4.1"
+    interBrokerProtocolVersion: "4.1"
     logCleanupPolicy: compact
 
   storage:
@@ -20,22 +21,6 @@ kafka:
     requests:
       cpu: 100m
       memory: 500Mi
-
-zookeeper:
-  replicas: 3
-  storage:
-    type: ephemeral
-    size: 10Gi
-    deleteClaim: false
-    class: netapp-qtree
-  resources:
-    limits:
-      cpu: 500m
-      memory: 500Mi
-    requests:
-      cpu: 100m
-      memory: 500Mi
-
 
 tlsSidecar:
   resources:
